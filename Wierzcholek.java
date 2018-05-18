@@ -14,14 +14,14 @@ public class Wierzcholek {
       this.is_empty = true;
 
       // dodatek w ostatecznej wersji usunac
-      this.budyek = 0;
-      this.nr_gracza = 0;
+      this.budynek = -1;
+      this.nr_gracza = -1;
     }
 
     // dodatek int gracz --> w ostatecznej wersji sprawdzam tylko is_empty i czy jest juz osada
     public void zbuduj_miasto(int gracz)
     {
-      if (this.is_empty == false and this.budynek == 1 and this.nr_gracza == gracz)
+      if (this.is_empty == false && this.budynek == 1 && this.nr_gracza == gracz)
       {
         this.budynek = 2;
         return;
@@ -31,15 +31,12 @@ public class Wierzcholek {
         return;
       }
     }
-    public void namaluj_miasto(Color kolor_gracza)
-    {
-      TODO
-    }
-    
+
+
     // dodatek int gracz --> w ostatecznej wersji sprawdzam tylko is_empty
     public void zbuduj_osade(int gracz)
     {
-      if (this.is_empty and this.budynek = 0 and this.nr_gracza = 0)
+      if (this.is_empty && this.budynek == -1 && this.nr_gracza == -1)
       {
         this.is_empty = false;
         this.budynek = 1;
@@ -51,8 +48,5 @@ public class Wierzcholek {
         return;
       }
     }
-    public void namaluj_osade(Color kolor_gracza)
-    {
-      TODO
-    }
+
 }
