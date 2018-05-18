@@ -26,6 +26,8 @@ import java.util.*;
 public class Okno extends JFrame{
 
     public static JPanel panel = new JPanel();
+    public static PanelMapa panel_mapa = new PanelMapa();
+
 
     public Okno() {
         super("SOLAR SYSTEM");
@@ -35,6 +37,9 @@ public class Okno extends JFrame{
         setBackground(Color.BLACK);
 
         add(panel);
+        panel.setBackground(Color.ORANGE);
+        add(panel_mapa);
+        panel_mapa.setBackground(Color.PINK);
 
         setVisible(true);
         repaint();

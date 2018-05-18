@@ -7,64 +7,40 @@ import javax.swing.JPanel;
 
 public class PanelMapa extends JPanel {
     public PanelMapa() {
+
     }
-    protected void paintComponent(Graphics g){
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.RED);
+        int centerWidth = new Integer(Okno.panel.getWidth() / 2);
+        int centerHeight = new Integer(Okno.panel.getHeight() / 2);
+
+
+        Polygon osada = new Polygon();
+        Polygon miasto = new Polygon();
+
+
+        Polygon szesciakat = new Polygon();
+        szesciakat.addPoint(600, 100);
+        szesciakat.addPoint(700, 100);
+        szesciakat.addPoint(730, 170);
+        szesciakat.addPoint(700, 240);
+        szesciakat.addPoint(600, 240);
+        szesciakat.addPoint(570, 170);
+        g2d.fill(szesciakat);
         g2d.setColor(Color.WHITE);
-        int centerWidth = new Integer(Okno.panel.getWidth()/2);
-        int centerHeight = new Integer(Okno.panel.getHeight()/2);
-        public Shape s = new Shape() {
-            @Override
-            public Rectangle getBounds() {
-                return null;
-            }
+        g2d.setStroke(new BasicStroke(15));
+        g2d.drawLine(700, 100, 730, 170);
+        g2d.setColor(Color.blue);
+        g2d.setStroke(new BasicStroke(8));
+        g2d.drawLine(700, 100, 730, 170);
 
-            @Override
-            public Rectangle2D getBounds2D() {
-                return null;
-            }
+        /*
+    public void drawOsada(int x, int y) {
+        Polygon osada = new Polygon();
 
-            @Override
-            public boolean contains(double x, double y) {
-                return false;
-            }
-
-            @Override
-            public boolean contains(Point2D p) {
-                return false;
-            }
-
-            @Override
-            public boolean intersects(double x, double y, double w, double h) {
-                return false;
-            }
-
-            @Override
-            public boolean intersects(Rectangle2D r) {
-                return false;
-            }
-
-            @Override
-            public boolean contains(double x, double y, double w, double h) {
-                return false;
-            }
-
-            @Override
-            public boolean contains(Rectangle2D r) {
-                return false;
-            }
-
-            @Override
-            public PathIterator getPathIterator(AffineTransform at) {
-                return null;
-            }
-
-            @Override
-            public PathIterator getPathIterator(AffineTransform at, double flatness) {
-                return null;
-            }
-        }
-        g2d.fill();
     }
+    */
+}
 }
