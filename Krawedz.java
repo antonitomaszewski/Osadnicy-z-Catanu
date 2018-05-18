@@ -18,13 +18,13 @@ public class Krawedz {
       is_empty = true;
 
       // dodatek w ostatecznej wersji usunac
-      this.nr_gracza = 0;
+      this.nr_gracza = -1;
     }
 
     // dodatek ostatecznie tylko is_empty i funkcja jest bezargumentowa
     public void zbuduj_droge(int gracz)
     {
-      if (this.is_empty and this.nr_gracza = 0)
+      if (this.is_empty && this.nr_gracza == -1)
       {
           this.is_empty = false;
           this.nr_gracza = gracz;
@@ -35,8 +35,5 @@ public class Krawedz {
         return;
       }
     }
-    public void namaluj_droge(Color kolor_gracza)
-    {
-      TODO
-    }
+
 }

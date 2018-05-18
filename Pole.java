@@ -7,11 +7,11 @@ public class Pole {
 
     public int wartosc;
     public String surowiec;
-    public Color color;
+    //public Color color = White;
 
 
-    public int x_srodka;
-    public int y_srodka;
+    public int x;
+    public int y;
 
     public ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcholek>();
     public ArrayList<Krawedz> lista_krawedzi = new ArrayList<Krawedz>();
@@ -19,16 +19,18 @@ public class Pole {
     // robi się raz na początku rundy i to koniec
     public Pole(int x, int y)
     {
-      x_srodka = x;
-      y_srodka = y;
+      this.x = x;
+      this.y = y;
 
-      zlodziej = false;
+      this.zlodziej = false;
+      this.wartosc = -1;
+      this.surowiec = "";
     }
     public void nadaj_wartosc_i_surowiec(int w, String s, Color c)
     {
-      wartosc = w;
-      surowiec = s;
-      color = c;
+      this.wartosc = w;
+      this.surowiec = s;
+      //this.color = c;
     }
 
     // będą dynamicznie zmieniane
