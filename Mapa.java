@@ -10,17 +10,21 @@ public class Mapa {
     /* DZIAŁA  -- Wyniki 19 Pól, 54 Wierzchołki, 72 krawędzie są dobre */
     public Mapa(){
       int X, Y, length, high, err; /* X, Y współrzędne punktu P0, length i high długość i wysokość trójkąta równobocznego w sześciokącie foremnym, err -- błąd na jaki można sobie pozwolić, przy wyliczaniu współrzędnych */
-      int dx, dy, dx2, dy2; /* wektory przesunięć z punktu pola do wierzchołków i krawędzi oraz z P0 do środków innych pól, dx2 dy2 tylko przy krawędziach */
       double rotation, default_rotation; /* obrót wektora o i * rotation, w przypadku pól typu 2 i 3, potrzebne default_rotation, bo są obkręcone o 30 stopni */
-      int[][] Wektory_wierzcholki_krawedzie_pola_typ_1 = new int[7][2];
+
+      int dx, dy, dx2, dy2; /* wektory przesunięć z punktu pola do wierzchołków i krawędzi */
+      int px, py; /* wektory przesunięć środków pól */
+
+      int[][] Wektory_wierzcholki_krawedzie = new int[7][2];
+      int[][] Wektory_pola_typ_1 = new int[6][2];
       int[][] Wektory_pola_typ_2_i_3 = new int[6][2];
       int i, j;
 
-      X = 0;
-      Y = 0;
-      length = 100;
+      X = 100;
+      Y = 100;
+      length = 50;
       high = (int) (length * (Math.cos(Math.PI/6)));
-      err = 10;
+      err = 7;
 
       rotation = Math.PI/3;   /* krok to 60 stopni */
       default_rotation = Math.PI/6;
@@ -31,16 +35,24 @@ public class Mapa {
         dx = (int) (Math.sin((i % 6) * rotation) * length);
         dy = (int) (Math.cos((i % 6) * rotation) * length);
 
-        Wektory_wierzcholki_krawedzie_pola_typ_1[i][0] = dx;
-        Wektory_wierzcholki_krawedzie_pola_typ_1[i][1] = dy;
+        Wektory_wierzcholki_krawedzie[i][0] = dx;
+        Wektory_wierzcholki_krawedzie[i][1] = dy;
       }
       for (i = 0; i < 6; i++)
       {
-        dx = (int) (Math.sin(i * rotation + default_rotation) * 2 * high);
-        dy = (int) (Math.cos(i * rotation + default_rotation) * 2 * high);
+        px = (int) (Math.sin(i * rotation) * 3 * length);
+        py = (int) (Math.cos(i * rotation) * 3 * length);
 
-        Wektory_pola_typ_2_i_3[i][0] = dx;
-        Wektory_pola_typ_2_i_3[i][1] = dy;
+        Wektory_pola_typ_1[i][0] = px;
+        Wektory_pola_typ_1[i][1] = py;
+      }
+      for (i = 0; i < 6; i++)
+      {
+        px = (int) (Math.sin(i * rotation + default_rotation) * 2 * high);
+        py = (int) (Math.cos(i * rotation + default_rotation) * 2 * high);
+
+        Wektory_pola_typ_2_i_3[i][0] = px;
+        Wektory_pola_typ_2_i_3[i][1] = py;
       }
 
 
@@ -50,12 +62,12 @@ public class Mapa {
 
       for (i = 0; i < 6; i++)
       {
-        dx = Wektory_wierzcholki_krawedzie_pola_typ_1[i][0];
-        dy = Wektory_wierzcholki_krawedzie_pola_typ_1[i][1];
-        dx2 = Wektory_wierzcholki_krawedzie_pola_typ_1[i + 1][0];
-        dy2 = Wektory_wierzcholki_krawedzie_pola_typ_1[i + 1][1];
-        Wierzcholek W = new Wierzcholek(dx, dy);
-        Krawedz K = new Krawedz(dx, dy, dx2, dy2);
+        dx = Wektory_wierzcholki_krawedzie[i][0];
+        dy = Wektory_wierzcholki_krawedzie[i][1];
+        dx2 = Wektory_wierzcholki_krawedzie[i + 1][0];
+        dy2 = Wektory_wierzcholki_krawedzie[i + 1][1];
+        Wierzcholek W = new Wierzcholek(X + dx, Y + dy);
+        Krawedz K = new Krawedz(X + dx, Y + dy, X + dx2, Y + dy2);
 
         P0.lista_wierzcholkow.add(W);
         P0.lista_krawedzi.add(K);
@@ -67,18 +79,18 @@ public class Mapa {
       boolean czy_znalazl_podobny;
       for (i = 0; i < 6; i++)
       {
-        dx = 3 * Wektory_wierzcholki_krawedzie_pola_typ_1[i][0];
-        dy = 3 * Wektory_wierzcholki_krawedzie_pola_typ_1[i][1];
-        Pole P_i = new Pole(X + dx, Y + dy);
+        px = Wektory_pola_typ_1[i][0];
+        py = Wektory_pola_typ_1[i][1];
+        Pole P_i = new Pole(X + px, Y + py);
         this.lista_pol.add(P_i);
 
         for (j = 0; j < 6; j++)
         {
           czy_znalazl_podobny = false;
-          dx = P_i.x + Wektory_wierzcholki_krawedzie_pola_typ_1[j][0];
-          dy = P_i.y + Wektory_wierzcholki_krawedzie_pola_typ_1[j][1];
-          dx2 = P_i.x + Wektory_wierzcholki_krawedzie_pola_typ_1[j + 1][0];
-          dy2 = P_i.y + Wektory_wierzcholki_krawedzie_pola_typ_1[j + 1][1];
+          dx = P_i.x + Wektory_wierzcholki_krawedzie[j][0];
+          dy = P_i.y + Wektory_wierzcholki_krawedzie[j][1];
+          dx2 = P_i.x + Wektory_wierzcholki_krawedzie[j + 1][0];
+          dy2 = P_i.y + Wektory_wierzcholki_krawedzie[j + 1][1];
 
           for (Wierzcholek W : this.lista_wierzcholkow)
           {
@@ -123,19 +135,19 @@ public class Mapa {
       /* 6 pól typ 2 -- dotykające krawędziami P0 */
       for (i = 0; i < 6; i++)
       {
-        dx = Wektory_pola_typ_2_i_3[i][0];
-        dy = Wektory_pola_typ_2_i_3[i][1];
+        px = Wektory_pola_typ_2_i_3[i][0];
+        py = Wektory_pola_typ_2_i_3[i][1];
 
-        Pole P_i = new Pole(X + dx, Y + dy);
+        Pole P_i = new Pole(X + px, Y + py);
         this.lista_pol.add(P_i);
 
         for (j = 0; j < 6; j++)
         {
           czy_znalazl_podobny = false;
-          dx = P_i.x + Wektory_wierzcholki_krawedzie_pola_typ_1[j][0];
-          dy = P_i.y + Wektory_wierzcholki_krawedzie_pola_typ_1[j][1];
-          dx2 = P_i.x + Wektory_wierzcholki_krawedzie_pola_typ_1[j + 1][0];
-          dy2 = P_i.y + Wektory_wierzcholki_krawedzie_pola_typ_1[j + 1][1];
+          dx = P_i.x + Wektory_wierzcholki_krawedzie[j][0];
+          dy = P_i.y + Wektory_wierzcholki_krawedzie[j][1];
+          dx2 = P_i.x + Wektory_wierzcholki_krawedzie[j + 1][0];
+          dy2 = P_i.y + Wektory_wierzcholki_krawedzie[j + 1][1];
 
           for (Wierzcholek W : this.lista_wierzcholkow)
             {
@@ -180,19 +192,19 @@ public class Mapa {
         /* 6 pól typu 3 -- najbardziej oddalone od P0 */
         for (i = 0; i < 6; i++)
         {
-          dx = Wektory_pola_typ_2_i_3[i][0] * 2;
-          dy = Wektory_pola_typ_2_i_3[i][1] * 2;
+          px = Wektory_pola_typ_2_i_3[i][0] * 2;
+          py = Wektory_pola_typ_2_i_3[i][1] * 2;
 
-          Pole P_i = new Pole(X + dx, Y + dy);
+          Pole P_i = new Pole(X + px, Y + py);
           this.lista_pol.add(P_i);
 
           for (j = 0; j < 6; j++)
           {
             czy_znalazl_podobny = false;
-            dx = P_i.x + Wektory_wierzcholki_krawedzie_pola_typ_1[j][0];
-            dy = P_i.y + Wektory_wierzcholki_krawedzie_pola_typ_1[j][1];
-            dx2 = P_i.x + Wektory_wierzcholki_krawedzie_pola_typ_1[j + 1][0];
-            dy2 = P_i.y + Wektory_wierzcholki_krawedzie_pola_typ_1[j + 1][1];
+            dx = P_i.x + Wektory_wierzcholki_krawedzie[j][0];
+            dy = P_i.y + Wektory_wierzcholki_krawedzie[j][1];
+            dx2 = P_i.x + Wektory_wierzcholki_krawedzie[j + 1][0];
+            dy2 = P_i.y + Wektory_wierzcholki_krawedzie[j + 1][1];
 
             for (Wierzcholek W : this.lista_wierzcholkow)
               {
