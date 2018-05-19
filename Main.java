@@ -8,6 +8,28 @@ public class Main{
     {
       //System.out.println(P.x + " " + P.y + '\n');
       i++;
+      int k = 0;
+      int w = 0;
+      int[][] wierzcholki = new int[6][2];
+      int[][] krawedzie = new int[6][4];
+      for (Wierzcholek W : P.lista_wierzcholkow)
+      {
+        wierzcholki[w][0] = W.x;
+        wierzcholki[w][1] = W.y;
+        w++;
+        System.out.println(W.x + " " + W.y);
+      }
+
+      for (Krawedz K : P.lista_krawedzi)
+      {
+        krawedzie[k][0] = K.x1;
+        krawedzie[k][1] = K.y1;
+        krawedzie[k][2] = K.x2;
+        krawedzie[k][3] = K.y2;
+        k++;
+        System.out.println(K.x1 + " " + K.y1 + " " + K.x2 + " " + K.y2);
+      }
+      System.out.println("krawedzie: " + k + " wierzchołki: " + w);
     }
     System.out.println("liczba pól = " + i + "\n\n");
 

@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class Mapa {
-    public ArrayList<Pole> lista_pol = new ArrayList<Pole>();
-    public ArrayList<Krawedz> lista_krawedzi = new ArrayList<Krawedz>();
-    public ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcholek>();
+    public static ArrayList<Pole> lista_pol = new ArrayList<Pole>();
+    public static ArrayList<Krawedz> lista_krawedzi = new ArrayList<Krawedz>();
+    public static ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcholek>();
 
 
     /* STWÓRZ MAPĘ */
@@ -20,9 +20,9 @@ public class Mapa {
       int[][] Wektory_pola_typ_2_i_3 = new int[6][2];
       int i, j;
 
-      X = 100;
-      Y = 100;
-      length = 50;
+      X = 0;
+      Y = 0;
+      length = 100;
       high = (int) (length * (Math.cos(Math.PI/6)));
       err = 7;
 

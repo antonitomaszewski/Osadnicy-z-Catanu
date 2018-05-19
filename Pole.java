@@ -13,8 +13,8 @@ public class Pole {
     public int x;
     public int y;
 
-    public ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcholek>();
-    public ArrayList<Krawedz> lista_krawedzi = new ArrayList<Krawedz>();
+    public static ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcholek>();
+    public static ArrayList<Krawedz> lista_krawedzi = new ArrayList<Krawedz>();
 
     // robi się raz na początku rundy i to koniec
     public Pole(int x, int y)
