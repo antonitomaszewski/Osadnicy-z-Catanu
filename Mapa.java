@@ -6,6 +6,97 @@ public class Mapa {
     public ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcholek>();
 
 
+    public void losuj_wartosci_i_zasoby_na_polach()
+    {
+      int[][] wartosci = new int[11][2];
+
+      String[] surowce = new String[5];
+      Color[] surowce_kolory = new Color[5];
+      int[] surowce_inty = new int[5][2];
+
+      int pozycja;
+      int rand, max, min;
+      int wynik;
+      boolean b;
+      pozycja = 0;
+      //rand = (int) ((Math.random() * ((max - min) + 1)) + min);
+      while (pozycja < 11)
+      {
+        if (pozycja == 2 || pozycja == 7 || pozycja == 12)
+        {
+          //wartosci.add(wartosc);
+          wartosci[pozycja][0] = pozycja;
+          wartosci[pozycja][1] = 1;
+        } else {
+          //wartosci.add(wartosc);
+          //wartosci.add(wartosc);
+          wartosci[pozycja][0] = pozycja;
+          wartosci[pozycja][1] = 2;
+          pozycja++;
+        }
+      }
+      pozycja = 0;
+
+      surowce[0] = "owca";
+      surowce_kolory[0] = Color.Green;
+      surowce_inty[0][0] = 0;
+      surowce_inty[0][1] = 4;
+
+      surowce[1] = "siano";
+      surowce_kolory[1] = Color.Yellow;
+      surowce_inty[1][0] = 1;
+      surowce_inty[1][1] = 4;
+
+      surowce[2] = "drewno";
+      surowce_inty[2][0] = 2;
+      surowce_inty[2][1] = 4;
+      surowce_kolory[2] = Color.Brown;
+
+      surowce[3] = "cegla";
+      surowce_inty[3][0] = 0;
+      surowce_inty[3][1] = 3;
+      surowce_kolory[3] = Color.Red;
+
+      surowce[4] = "kamien";
+      surowce_inty[4][0] = 0;
+      surowce_inty[4][1] = 3;
+      surowce_kolory[4] = Color.Grey;
+      rand = (int) ((Math.random() * ((5 - 0) + 1)) + 0);
+      surowce_inty[rand][1] += 1;
+
+
+      for (Pole P : this.lista_pol)
+      {
+        b = false;
+        min = 2;
+        max = 12;
+        while (!b)
+        {
+          rand = (int) ((Math.random() * ((max - min) + 1)) + min);
+          if (wartosci[rand][1] > 0)
+          {
+            wartosci[rand][1]--;
+            P.wartosc = wartosci[rand][0];
+            b = true;
+          }
+        }
+        b = false;
+        min = 0;
+        max = 5;
+        while (!b)
+        {
+          rand = (int) ((Math.random() * ((max - min) + 1)) + min);
+          if (surowce_inty[rand][1] > 0)
+          {
+            surowce_inty[rand][1]--;
+            P.surowiec = surowce[rand];
+            P.kolor = surowce_kolory[rand];
+            b = true;
+          }
+        }
+      }
+
+    }
     /* STWÓRZ MAPĘ */
     /* DZIAŁA  -- Wyniki 19 Pól, 54 Wierzchołki, 72 krawędzie są dobre */
     public Mapa(){
@@ -245,7 +336,9 @@ public class Mapa {
               }
             }
           }
+          losuj_wartosci_i_zasoby_na_polach();
       }
+
 
 }
 

@@ -3,11 +3,11 @@ import java.util.ArrayList;
 
 public class Pole {
 
-    public boolean zlodziej;
+    public boolean zlodziej = false;
 
-    public int wartosc;
-    public String surowiec;
-    //public Color color = White;
+    public int wartosc = -1;
+    public String surowiec = "";
+    public Color kolor = Color.White;
 
 
     public int x;
@@ -15,6 +15,7 @@ public class Pole {
 
     public ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcholek>();
     public ArrayList<Krawedz> lista_krawedzi = new ArrayList<Krawedz>();
+    //public ArrayList<Gracz> lista_graczy = new ArrayList<Gracz>();
 
     // robi się raz na początku rundy i to koniec
     public Pole(int x, int y)
@@ -30,7 +31,7 @@ public class Pole {
     {
       this.wartosc = w;
       this.surowiec = s;
-      //this.color = c;
+      //this.kolor = c;
     }
 
     // będą dynamicznie zmieniane

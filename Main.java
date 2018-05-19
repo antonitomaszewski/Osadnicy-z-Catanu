@@ -14,7 +14,7 @@ public class Main{
     i = 0;
     for (Wierzcholek W : Map.lista_wierzcholkow)
     {
-      //System.out.println(W.x + " " + W.y + "\n");
+      System.out.println(W.x + " " + W.y + "\n");
       i++;
     }
     System.out.println("liczba wierzchołków = " + i + "\n\n");
