@@ -7,7 +7,7 @@ public class Pole {
 
     public int wartosc;
     public String surowiec;
-    //public Color color = White;
+    public Color kolor;
 
 
     public int x;
@@ -19,28 +19,28 @@ public class Pole {
     // robi się raz na początku rundy i to koniec
     public Pole(int x, int y)
     {
-      this.x = x;
-      this.y = y;
+        this.x = x;
+        this.y = y;
 
-      this.zlodziej = false;
-      this.wartosc = -1;
-      this.surowiec = "";
+        this.zlodziej = false;
+        this.wartosc = -1;
+        this.surowiec = "";
     }
     public void nadaj_wartosc_i_surowiec(int w, String s, Color c)
     {
-      this.wartosc = w;
-      this.surowiec = s;
-      //this.color = c;
+        this.wartosc = w;
+        this.surowiec = s;
+        //this.color = c;
     }
 
     // będą dynamicznie zmieniane
     public void dodaj_zlodzieja()
     {
-      zlodziej = true;
+        zlodziej = true;
     }
     public void usun_zlodzieja()
     {
-      zlodziej = false;
+        zlodziej = false;
     }
 
 }

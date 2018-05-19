@@ -8,45 +8,45 @@ public class Wierzcholek {
 
     public Wierzcholek(int x, int y)
     {
-      this.x = x;
-      this.y = y;
+        this.x = x;
+        this.y = y;
 
-      this.is_empty = true;
+        this.is_empty = true;
 
-      // dodatek w ostatecznej wersji usunac
-      this.budynek = -1;
-      this.nr_gracza = -1;
+        // dodatek w ostatecznej wersji usunac
+        this.budynek = -1;
+        this.nr_gracza = -1;
     }
 
     // dodatek int gracz --> w ostatecznej wersji sprawdzam tylko is_empty i czy jest juz osada
     public void zbuduj_miasto(int gracz)
     {
-      if (this.is_empty == false && this.budynek == 1 && this.nr_gracza == gracz)
-      {
-        this.budynek = 2;
-        return;
-      } else
-      {
-        System.out.println("Błąd w budowaniu miasta");
-        return;
-      }
+        if (this.is_empty == false && this.budynek == 1 && this.nr_gracza == gracz)
+        {
+            this.budynek = 2;
+            return;
+        } else
+        {
+            System.out.println("Błąd w budowaniu miasta");
+            return;
+        }
     }
 
 
     // dodatek int gracz --> w ostatecznej wersji sprawdzam tylko is_empty
     public void zbuduj_osade(int gracz)
     {
-      if (this.is_empty && this.budynek == -1 && this.nr_gracza == -1)
-      {
-        this.is_empty = false;
-        this.budynek = 1;
-        this.nr_gracza = gracz;
-        return;
-      } else
-      {
-        System.out.println("Błąd w budowaniu osady");
-        return;
-      }
+        if (this.is_empty && this.budynek == -1 && this.nr_gracza == -1)
+        {
+            this.is_empty = false;
+            this.budynek = 1;
+            this.nr_gracza = gracz;
+            return;
+        } else
+        {
+            System.out.println("Błąd w budowaniu osady");
+            return;
+        }
     }
 
 }
