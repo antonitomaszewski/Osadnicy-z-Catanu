@@ -1,11 +1,162 @@
+import java.util.Random;
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class Mapa {
-    public ArrayList<Pole> lista_pol = new ArrayList<Pole>();
-    public ArrayList<Krawedz> lista_krawedzi = new ArrayList<Krawedz>();
-    public ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcholek>();
+    public static ArrayList<Pole> lista_pol = new ArrayList<Pole>();
+    public static ArrayList<Krawedz> lista_krawedzi = new ArrayList<Krawedz>();
+    public static ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcholek>();
 
 
+    public void losuj_wartosci_i_zasoby_na_polach()
+    {
+    //Random randomGenerator = new Random();
+      ArrayList<Integer> wartosci = new ArrayList<Integer>();
+      //int[][] wartosci = new int[11][2];
+      ArrayList<String> surowce = new ArrayList<String>();
+      //String[] surowce = new String[5];
+      ArrayList<Color> surowce_kolory = new ArrayList<Color>();
+      //Color[] surowce_kolory = new Color[5];
+      ArrayList<Integer> surowce_inty = new ArrayList<Integer>();
+      ArrayList<Integer> surowce_inty_ile = new ArrayList<Integer>();
+      //int[] surowce_inty = new int[5][2];
+      int pozycja;
+      int index;
+      int index2;
+
+      pozycja = 2;
+      //rand = (int) ((Math.random() * ((max - min) + 1)) + min);
+      while (pozycja < 13)
+      {
+        if (pozycja == 2 || pozycja == 7 || pozycja == 12)
+        {
+          //wartosci.add(wartosc);
+          wartosci.add(pozycja);
+          pozycja++;
+        } else {
+          wartosci.add(pozycja);
+          wartosci.add(pozycja);
+          pozycja++;
+        }
+      }
+      /*
+      for (Integer i : wartosci)
+        System.out.println(i);
+      System.out.println();
+      pozycja = 0;
+*/
+      surowce.add("owca");
+      surowce.add("siano");
+      surowce.add("drewno");
+      surowce.add("cegla");
+      surowce.add("kamien");
+      /*
+      for (String s : surowce)
+        System.out.println(s);
+      System.out.println();
+      */
+
+      surowce_kolory.add(new Color(144, 255, 106));
+      surowce_kolory.add(new Color(255, 228, 95));
+      surowce_kolory.add(new Color(76, 128, 20));
+      surowce_kolory.add(new Color(173, 92, 34));
+      surowce_kolory.add(new Color(158, 158, 164));
+
+
+      surowce_inty.add(0);
+      surowce_inty_ile.add(4);
+
+      surowce_inty.add(1);
+      surowce_inty_ile.add(4);
+
+      surowce_inty.add(2);
+      surowce_inty_ile.add(4);
+
+      surowce_inty.add(3);
+      surowce_inty_ile.add(3);
+
+      surowce_inty.add(4);
+      surowce_inty_ile.add(3);
+
+      index = (int) (Math.random() * 5 + 1);
+
+/*
+      for (Integer i : surowce_inty)
+        System.out.println(i);
+      System.out.println();
+      for (Integer i : surowce_inty_ile)
+        System.out.println(i);
+      System.out.println();
+      */
+      int[] inty_ile = new int[5];
+      inty_ile[0] = 4;
+      inty_ile[1] = 4;
+      inty_ile[2] = 4;
+      inty_ile[3] = 3;
+      inty_ile[4] = 3;
+      inty_ile[index]++;
+/*
+      for (int w = 0; w < 5; w++)
+        System.out.println(inty_ile[w]);
+*/
+      int sur_size = 4;
+      int wart_size = 18;
+      int w;
+      int s;
+      //System.out.println(wartosci.size());
+      for (Pole P : this.lista_pol)
+      {
+        /*
+        System.out.println();
+        for (int w = 0; w < 5; w++)
+          System.out.println(inty_ile[w]);
+        System.out.println();
+        for (Integer i : surowce_inty)
+          System.out.println(i);
+        System.out.println();
+        for (String s : surowce)
+          System.out.println(s);
+        System.out.println();
+        */
+
+        w = (int) (Math.random() * (wart_size + 1));
+        s = (int) (Math.random() * (sur_size + 1));  // surowiec na polu
+/*
+        System.out.println(w);
+        System.out.println(s);
+        System.out.println(); */
+        /*
+        for (Integer i : wartosci)
+          System.out.println(i);
+        System.out.println(); */
+        //System.out.println(inty_ile[0] + " " +  inty_ile[1] + " " + inty_ile[2] + " " + inty_ile[3] + " " + inty_ile[4] + "\n\n");
+
+        //wartosci.remove(index);
+
+        P.wartosc = (int) wartosci.get(w);  // wartosc na polu
+        P.surowiec = surowce.get(s);
+        P.kolor = surowce_kolory.get(s);
+        wartosci.remove(w);
+        wart_size--;
+
+        //System.out.println("wartosci.size() : " + wartosci.size() + " surowce.size() " + surowce.size() + " wartosc : " + wartosci.get(index) + " ile zostalo intow : " + inty_ile[index2] + '\n');
+
+        if (inty_ile[s] > 1)
+        {
+          inty_ile[s]--;
+        } else {
+          surowce_inty.remove(s);
+          //surowce_inty_ile.remove(index2);
+          surowce.remove(s);
+          surowce_kolory.remove(s);
+          inty_ile[s] = 0;
+          for (int i = s; i < 4; i++)
+            inty_ile[i] = inty_ile[i+1];
+          inty_ile[sur_size] = 0;
+          sur_size--;
+        }
+      }
+    }
     /* STWÓRZ MAPĘ */
     /* DZIAŁA  -- Wyniki 19 Pól, 54 Wierzchołki, 72 krawędzie są dobre */
     public Mapa(){
@@ -20,9 +171,9 @@ public class Mapa {
       int[][] Wektory_pola_typ_2_i_3 = new int[6][2];
       int i, j;
 
-      X = 100;
-      Y = 100;
-      length = 50;
+      X = 0;
+      Y = 0;
+      length = 100;
       high = (int) (length * (Math.cos(Math.PI/6)));
       err = 7;
 
@@ -245,6 +396,7 @@ public class Mapa {
               }
             }
           }
+          losuj_wartosci_i_zasoby_na_polach();
       }
 
 }
