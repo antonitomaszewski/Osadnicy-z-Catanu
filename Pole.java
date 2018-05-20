@@ -1,28 +1,19 @@
-import java.awt.*;
-
-import java.awt.*;
-import java.awt.*;
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.ArrayList;
-import java.util.ArrayList;
-import java.util.ArrayList;
-import java.util.ArrayList;
-import java.awt.*;
-import java.util.ArrayList;
+import java.awt.Color;
 import java.util.ArrayList;
 
 public class Pole {
+  
+public int x;
+public int y;
 
-public boolean zlodziej;
+public boolean zlodziej = false;
 
-public int wartosc;
-public String surowiec;
+public int wartosc = -1;
+public String surowiec = "";
 public Color kolor = Color.WHITE;
 
 
-public int x;
-public int y;
+
 
 public ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcholek>();
 public ArrayList<Krawedz> lista_krawedzi = new ArrayList<Krawedz>();

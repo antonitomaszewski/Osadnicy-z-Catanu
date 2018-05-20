@@ -1,12 +1,14 @@
 import java.awt.Color;
 
 public class Krawedz {
+  
 public int x1;
 public int y1;
 public int x2;
 public int y2;
 
 public boolean is_empty = true;
+
 public int nr_gracza = -1;
 public String nazwa_gracza = "";
 public Color kolor_gracza = Color.WHITE;
