@@ -1,70 +1,64 @@
+import java.awt.geom.AffineTransform;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JPanel;
+import java.awt.geom.Point2D;
+import javax.swing.JPanel;
 
 public class PanelMapa extends JPanel {
-    public PanelMapa() {
-    }
-    protected void paintComponent(Graphics g){
+public PanelMapa() {
+
+}
+protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.WHITE);
-        int centerWidth = new Integer(Okno.panel.getWidth()/2);
-        int centerHeight = new Integer(Okno.panel.getHeight()/2);
-        public Shape s = new Shape() {
-            @Override
-            public Rectangle getBounds() {
-                return null;
-            }
+        g2d.setColor(Color.RED);
 
-            @Override
-            public Rectangle2D getBounds2D() {
-                return null;
-            }
 
-            @Override
-            public boolean contains(double x, double y) {
-                return false;
-            }
+        //rysujemy wszystkie pola
 
-            @Override
-            public boolean contains(Point2D p) {
-                return false;
-            }
 
-            @Override
-            public boolean intersects(double x, double y, double w, double h) {
-                return false;
-            }
-
-            @Override
-            public boolean intersects(Rectangle2D r) {
-                return false;
-            }
-
-            @Override
-            public boolean contains(double x, double y, double w, double h) {
-                return false;
-            }
-
-            @Override
-            public boolean contains(Rectangle2D r) {
-                return false;
-            }
-
-            @Override
-            public PathIterator getPathIterator(AffineTransform at) {
-                return null;
-            }
-
-            @Override
-            public PathIterator getPathIterator(AffineTransform at, double flatness) {
-                return null;
-            }
+        for(Pole p : Mapa.lista_pol) {
+                Polygon szesciakat = new Polygon();
+                for(Wierzcholek w : p.lista_wierzcholkow) {
+                        szesciakat.addPoint(w.x, w.y);
+                }
+                g2d.setColor(p.kolor);
+                g2d.fill(szesciakat);
         }
-        g2d.fill();
-    }
+
+
+
+        //rysujemy wszystkie drogi
+        g2d.setColor(Color.WHITE);
+        g2d.setStroke(new BasicStroke(15));
+        for(Krawedz k : Mapa.lista_krawedzi) {
+                g2d.drawLine(k.x1, k.y1, k.x2, k.y2);
+        }
+
+
+
+
+        //rysujemy zajete drogi
+        g2d.setStroke(new BasicStroke(7));
+        for(Krawedz k : Mapa.lista_krawedzi) {
+                if(!k.is_empty) {
+                        Color c = new Color(0,0,255); //! DO ZMIANY!
+                        g2d.setColor(c);
+                        g2d.drawLine(k.x1, k.y1, k.x2, k.y2);
+                }
+        }
+
+        //rysujemy osady
+
+
+
+        //rysujemy drogi
+
+
+}
 }

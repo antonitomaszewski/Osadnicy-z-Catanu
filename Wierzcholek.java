@@ -1,52 +1,57 @@
+import java.awt.Color;
+
 public class Wierzcholek {
-    public int x;
-    public int y;
 
-    public boolean is_empty;
-    public int budynek;
-    public int nr_gracza;
+public int x;
+public int y;
 
-    public Wierzcholek(int x, int y)
-    {
-      this.x = x;
-      this.y = y;
+public boolean is_empty = true;
+public int budynek = -1;
+public int nr_gracza = -1;
+public String nazwa_gracza = "";
+public Color kolor_gracza = Color.WHITE;
 
-      this.is_empty = true;
+public Wierzcholek(int x, int y)
+{
+        this.x = x;
+        this.y = y;
 
-      // dodatek w ostatecznej wersji usunac
-      this.budynek = -1;
-      this.nr_gracza = -1;
-    }
+        this.is_empty = true;
 
-    // dodatek int gracz --> w ostatecznej wersji sprawdzam tylko is_empty i czy jest juz osada
-    public void zbuduj_miasto(int gracz)
-    {
-      if (this.is_empty == false && this.budynek == 1 && this.nr_gracza == gracz)
-      {
-        this.budynek = 2;
-        return;
-      } else
-      {
-        System.out.println("Błąd w budowaniu miasta");
-        return;
-      }
-    }
+        // dodatek w ostatecznej wersji usunac
+        this.budynek = -1;
+        this.nr_gracza = -1;
+}
+
+// dodatek int gracz --> w ostatecznej wersji sprawdzam tylko is_empty i czy jest juz osada
+public void zbuduj_miasto(int gracz)
+{
+        if (this.is_empty == false && this.budynek == 1 && this.nr_gracza == gracz)
+        {
+                this.budynek = 2;
+                return;
+        } else
+        {
+                System.out.println("Błąd w budowaniu miasta");
+                return;
+        }
+}
 
 
-    // dodatek int gracz --> w ostatecznej wersji sprawdzam tylko is_empty
-    public void zbuduj_osade(int gracz)
-    {
-      if (this.is_empty && this.budynek == -1 && this.nr_gracza == -1)
-      {
-        this.is_empty = false;
-        this.budynek = 1;
-        this.nr_gracza = gracz;
-        return;
-      } else
-      {
-        System.out.println("Błąd w budowaniu osady");
-        return;
-      }
-    }
+// dodatek int gracz --> w ostatecznej wersji sprawdzam tylko is_empty
+public void zbuduj_osade(int gracz)
+{
+        if (this.is_empty && this.budynek == -1 && this.nr_gracza == -1)
+        {
+                this.is_empty = false;
+                this.budynek = 1;
+                this.nr_gracza = gracz;
+                return;
+        } else
+        {
+                System.out.println("Błąd w budowaniu osady");
+                return;
+        }
+}
 
 }
