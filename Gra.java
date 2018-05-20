@@ -153,7 +153,7 @@ public class Gra{
     return;
   }
   public void daj_graczowi_nr(int nr, String surowiec, int ile){
-    Gracz G = lista_graczy.get(nr-nr_gracza_rozpoczynajacego);
+    Gracz G = lista_graczy.get((nr + (liczba_graczy - nr_gracza_rozpoczynajacego)) % liczba_graczy);
     G.dodaj(ile,surowiec);
     /*
     if (nr == 1)
