@@ -7,10 +7,10 @@ public class Surowce {
 
     public Surowce()
     {
-      owca = 0;
-      siano = 0;
-      cegla = 0;
-      drewno = 0;
-      kamien = 0;
+        owca = 0;
+        siano = 0;
+        cegla = 0;
+        drewno = 0;
+        kamien = 0;
     }
 }
