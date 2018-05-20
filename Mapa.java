@@ -15,7 +15,6 @@ public void losuj_wartosci_i_zasoby_na_polach()
         ArrayList<Integer> wartosci = new ArrayList<Integer>();
         ArrayList<String> surowce = new ArrayList<String>();
         ArrayList<Color> surowce_kolory = new ArrayList<Color>();
-        ArrayList<Integer> surowce_inty = new ArrayList<Integer>();
 
         int pozycja;
 
@@ -47,17 +46,14 @@ public void losuj_wartosci_i_zasoby_na_polach()
         surowce_kolory.add(new Color(158, 158, 164));
 
 
-        surowce_inty.add(0);
-        surowce_inty.add(1);
-        surowce_inty.add(2);
-        surowce_inty.add(3);
-        surowce_inty.add(4);
 
+        int ile_zostalo_wartosci_do_rozdania, ile_zostalo_surowcow_do_rozdania;
+        int wylosowana_wartosc_indeks, wylosowany_surowiec_indeks;
 
-        int wartosci_size = 18, surowce_size = 4;
-        int wartosc, surowiec;
-        surowiec = (int) (Math.random() * (surowce_size + 1));
-        
+        ile_zostalo_wartosci_do_rozdania = 19;
+        ile_zostalo_surowcow_do_rozdania = 5;
+
+        wylosowany_surowiec_indeks = (int) (Math.random() * ile_zostalo_surowcow_do_rozdania);
 
         int[] lista_ile_zostalo_surowca = new int[5];
         lista_ile_zostalo_surowca [0] = 4;
@@ -65,35 +61,35 @@ public void losuj_wartosci_i_zasoby_na_polach()
         lista_ile_zostalo_surowca [2] = 4;
         lista_ile_zostalo_surowca [3] = 3;
         lista_ile_zostalo_surowca [4] = 3;
-        lista_ile_zostalo_surowca [surowiec]++;
+        lista_ile_zostalo_surowca [wylosowany_surowiec_indeks]++;
 
         for (Pole P : this.lista_pol)
         {
                 /* Losowanie wartośći i surowca na danym Polu */
-                wartosc = (int) (Math.random() * (wartosci_size + 1));
-                surowiec = (int) (Math.random() * (surowce_size + 1)); // surowiec na polu
+                wylosowana_wartosc_indeks = (int) (Math.random() * ile_zostalo_wartosci_do_rozdania);
+                wylosowany_surowiec_indeks = (int) (Math.random() * ile_zostalo_surowcow_do_rozdania); // surowiec na polu
                 /* Ustawianie wylosowanych wartości -- kolor jest skojarzony z surowcem, więc go nie należy losować, aby zachować spójność */
-                P.wartosc = (int) wartosci.get(wartosc); // wartosc na polu
-                P.surowiec = surowce.get(surowiec);
-                P.kolor = surowce_kolory.get(surowiec);
+                P.wartosc = (int) wartosci.get(wylosowana_wartosc_indeks); // wartosc na polu
+                P.surowiec = surowce.get(wylosowany_surowiec_indeks);
+                P.kolor = surowce_kolory.get(wylosowany_surowiec_indeks);
 
                 /* Usuwanie wartości z listy wartości, aby każda suma_kostek pojawiła się odpowiednią liczbę razy na planszy */
-                wartosci.remove(wartosc);
-                wartosci_size--;
+                wartosci.remove(wylosowana_wartosc_indeks);
+                ile_zostalo_wartosci_do_rozdania--;
 
                 /* Usuwanie surowca, jeśli właśnie wykorzystaliśmy jego ostatnią sztukę, w przeciwnym przypadku zmniejszamy jego ilość */
-                if (lista_ile_zostalo_surowca [surowiec] > 1)
+                if (lista_ile_zostalo_surowca [wylosowany_surowiec_indeks] > 1)
                 {
-                        lista_ile_zostalo_surowca [surowiec]--;
+                        lista_ile_zostalo_surowca [wylosowany_surowiec_indeks]--;
                 } else {
-                        surowce.remove(surowiec);
-                        surowce_inty.remove(surowiec);
-                        surowce_kolory.remove(surowiec);
+                        surowce.remove(wylosowany_surowiec_indeks);
+                        surowce_kolory.remove(wylosowany_surowiec_indeks);
 
-                        for (int i = surowiec; i < 4; i++)
+                        for (int i = wylosowany_surowiec_indeks; i < 4; i++)
                                 lista_ile_zostalo_surowca [i] = lista_ile_zostalo_surowca [i+1];
-                        lista_ile_zostalo_surowca [surowce_size] = 0;
-                        surowce_size--;
+                        ile_zostalo_surowcow_do_rozdania--;
+                        lista_ile_zostalo_surowca [ile_zostalo_surowcow_do_rozdania] = 0;
+
                 }
         }
 }
