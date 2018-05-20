@@ -57,7 +57,7 @@ public void losuj_wartosci_i_zasoby_na_polach()
         int wartosci_size = 18, surowce_size = 4;
         int wartosc, surowiec;
         surowiec = (int) (Math.random() * (surowce_size + 1));
-        System.out.println(surowiec);
+        
 
         int[] lista_ile_zostalo_surowca = new int[5];
         lista_ile_zostalo_surowca [0] = 4;
