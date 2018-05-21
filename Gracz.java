@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -98,15 +100,17 @@ public boolean czy_droga_nie_przetnie_osady(Wierzcholek W) {
         return false;
 }
 
+
 public ArrayList<Krawedz> znajdz_wszyskie_dostepne_lokalizacje_drog() {
         ArrayList<Krawedz> dostepne_drogi = new ArrayList<Krawedz>();
         for (Wierzcholek W : drogi_osady_i_miasta) {
-                for (Krawedz K : W.sasiednie_krawedzie) {
-                        if (K.is_empty) {
-                                dostepne_drogi.add(K);
+                if (W.is_empty || W.nr_gracza == numer) {
+                        for (Krawedz K : W.sasiednie_krawedzie) {
+                                if (K.is_empty) {
+                                        dostepne_drogi.add(K);
+                                }
                         }
                 }
-
         }
         return dostepne_drogi;
 }
