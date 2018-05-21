@@ -1,17 +1,72 @@
 import java.util.ArrayList;
-
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Random;
 
 public class Mapa {
 public static ArrayList<Pole> lista_pol = new ArrayList<Pole>();
 public static ArrayList<Krawedz> lista_krawedzi = new ArrayList<Krawedz>();
 public static ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcholek>();
 
+/* PRZENIOSŁEM WARTOŚCI POCZĄTKOWE Z MAPY, DZIĘKI TEMU MOŻESZ JE ZMIENIAĆ W KLASIE I NIE PATRZEĆ NAWET DO ŚRODKA FUNKCJI */
+public int X = 950;
+public int Y = 570;
+public int err = 7;
+public int length = 100;
 
-public void losuj_wartosci_i_zasoby_na_polach()
-{
+
+/* FUNKCJE DO ZNAJDYWANIA PIERWSZYCH DWÓCH OSAD I DRÓG  -- TYLKO ONE Z POZIOMU MAPY, NASTĘPNE U GRACZA */
+public boolean czy_wierzcholek_dostepny(Wierzcholek W) {
+        if (!W.is_empty) {
+                return false;
+        }
+        for (Wierzcholek W_i : W.sasiednie_wierzcholki) {
+                if (!W_i.is_empty) {
+                        return false;
+                }
+        }
+        return true;
+}
+public ArrayList<Wierzcholek> dostepne_lokalizacje_pierwszej_osady() {
+        ArrayList<Wierzcholek> dostepne_osady = new ArrayList<Wierzcholek>();
+        for (Wierzcholek W : lista_wierzcholkow) {
+                if (czy_wierzcholek_dostepny(W)) {
+                        dostepne_osady.add(W);
+                }
+        }
+        return dostepne_osady;
+}
+
+public ArrayList<Krawedz> dostepne_lokalizacje_pierwszej_drogi(Gracz G) {
+        ArrayList<Krawedz> dostepne_drogi = new ArrayList<Krawedz>();
+        Wierzcholek pierwszy_wierzcholek = G.drogi_osady_i_miasta.get(0);
+        for (Krawedz K : pierwszy_wierzcholek.sasiednie_krawedzie) {
+                dostepne_drogi.add(K);
+        }
+        return dostepne_drogi;
+}
+
+public ArrayList<Wierzcholek> dostepne_lokalizacje_drugiej_osady() {
+        ArrayList<Wierzcholek> dostepne_osady = new ArrayList<Wierzcholek>();
+        for (Wierzcholek W : lista_wierzcholkow) {
+                if (czy_wierzcholek_dostepny(W)) {
+                        dostepne_osady.add(W);
+                }
+        }
+        return dostepne_osady;
+}
+public ArrayList<Krawedz> dostepne_lokalizacje_drugiej_drogi(Gracz G) {
+        ArrayList<Krawedz> dostepne_drogi = new ArrayList<Krawedz>();
+        Wierzcholek pierwszy_wierzcholek = G.drogi_osady_i_miasta.get(2);
+        for (Krawedz K : pierwszy_wierzcholek.sasiednie_krawedzie) {
+                dostepne_drogi.add(K);
+        }
+        return dostepne_drogi;
+}
+
+
+/* STWÓRZ MAPĘ */
+/* DZIAŁA  -- Wyniki 19 Pól, 54 Wierzchołki, 72 krawędzie są dobre */
+
+public void losuj_wartosci_i_zasoby_na_polach() {
         ArrayList<Integer> wartosci = new ArrayList<Integer>();
         ArrayList<String> surowce = new ArrayList<String>();
         ArrayList<Color> surowce_kolory = new ArrayList<Color>();
@@ -63,7 +118,7 @@ public void losuj_wartosci_i_zasoby_na_polach()
         lista_ile_zostalo_surowca [4] = 3;
         lista_ile_zostalo_surowca [wylosowany_surowiec_indeks]++;
 
-        for (Pole P : this.lista_pol)
+        for (Pole P : lista_pol)
         {
                 /* Losowanie wartośći i surowca na danym Polu */
                 wylosowana_wartosc_indeks = (int) (Math.random() * ile_zostalo_wartosci_do_rozdania);
@@ -93,37 +148,75 @@ public void losuj_wartosci_i_zasoby_na_polach()
                 }
         }
 }
-/* STWÓRZ MAPĘ */
-/* DZIAŁA  -- Wyniki 19 Pól, 54 Wierzchołki, 72 krawędzie są dobre */
+
+public boolean czy_dobra_odleglosc(Wierzcholek W1, Wierzcholek W2){
+        int err_length, length_err;
+        err_length = err + length;
+        length_err = length - err;
+
+        int odleglosc;
+        odleglosc = (int) Math.sqrt(Math.pow(W1.x - W2.x, 2) + Math.pow(W1.y - W2.y, 2));
+        if (odleglosc < err_length && odleglosc > length_err) {
+                return true;
+        }
+        return false;
+}
+public void stworz_krawedzie_ustaw_wskazniki_na_sasiadow(){
+        int err_length, length_err;
+
+        err_length = err + length;
+        length_err = length - err;
+
+        int od_ktorego, ktory;
+        od_ktorego = 0;
+
+        for (Wierzcholek W : lista_wierzcholkow) {
+                ktory = 0;
+                for (Wierzcholek W_i : lista_wierzcholkow) {
+                        if (ktory > od_ktorego) {
+                                if (czy_dobra_odleglosc(W, W_i)) {
+                                        W.sasiednie_wierzcholki.add(W_i);
+                                        W_i.sasiednie_wierzcholki.add(W);
+
+                                        Krawedz K = new Krawedz(W, W_i);
+                                        W.sasiednie_krawedzie.add(K);
+                                        W_i.sasiednie_krawedzie.add(K);
+                                        lista_krawedzi.add(K);
+                                }
+                        }
+                        ktory++;
+                }
+                od_ktorego++;
+        }
+}
+
 public Mapa(){
-        int X, Y, length, high, err; /* X, Y współrzędne punktu P0, length i high długość i wysokość trójkąta równobocznego w sześciokącie foremnym, err -- błąd na jaki można sobie pozwolić, przy wyliczaniu współrzędnych */
+        int high; /* X, Y współrzędne punktu P0, length i high długość i wysokość trójkąta równobocznego w sześciokącie foremnym, err -- błąd na jaki można sobie pozwolić, przy wyliczaniu współrzędnych */
         double rotation, default_rotation; /* obrót wektora o i * rotation, w przypadku pól typu 2 i 3, potrzebne default_rotation, bo są obkręcone o 30 stopni */
 
-        int dx, dy, dx2, dy2; /* wektory przesunięć z punktu pola do wierzchołków i krawędzi */
+        int dx, dy; /* wektory przesunięć z punktu pola do wierzchołków i krawędzi */
         int px, py; /* wektory przesunięć środków pól */
 
-        int[][] Wektory_wierzcholki_krawedzie = new int[7][2];
+        int[][] Wektory_wierzcholki = new int[6][2];
         int[][] Wektory_pola_typ_1 = new int[6][2];
         int[][] Wektory_pola_typ_2_i_3 = new int[6][2];
         int i, j;
 
-        X = 950;
-        Y = 570;
-        length = 100;
+
         high = (int) (length * (Math.cos(Math.PI/6)));
-        err = 7;
+
 
         rotation = Math.PI/3; /* krok to 60 stopni */
         default_rotation = Math.PI/6;
 
         /* liczę wartości wektorów i wrzucam je do tablicy intów, pierwsza rozmiaru 7, aby używać dla krawędzi, tab[0] == tab[6] */
-        for (i = 0; i < 7; i++)
+        for (i = 0; i < 6; i++)
         {
                 dx = (int) (Math.sin((i % 6) * rotation) * length);
                 dy = (int) (Math.cos((i % 6) * rotation) * length);
 
-                Wektory_wierzcholki_krawedzie[i][0] = dx;
-                Wektory_wierzcholki_krawedzie[i][1] = dy;
+                Wektory_wierzcholki[i][0] = dx;
+                Wektory_wierzcholki[i][1] = dy;
         }
         for (i = 0; i < 6; i++)
         {
@@ -145,21 +238,17 @@ public Mapa(){
 
         /* liczę pole P0, jego wierzchołki i krawędzie, od niego wszystkie inne pola uzależniam, wszystkie krawedzie i wierzchołki będą też trzymane w listach w mapie, będą to te same obiekty, co w listach pól */
         Pole P0 = new Pole(X,Y);
-        this.lista_pol.add(P0);
+        lista_pol.add(P0);
 
         for (i = 0; i < 6; i++)
         {
-                dx = Wektory_wierzcholki_krawedzie[i][0];
-                dy = Wektory_wierzcholki_krawedzie[i][1];
-                dx2 = Wektory_wierzcholki_krawedzie[i + 1][0];
-                dy2 = Wektory_wierzcholki_krawedzie[i + 1][1];
+                dx = Wektory_wierzcholki[i][0];
+                dy = Wektory_wierzcholki[i][1];
                 Wierzcholek W = new Wierzcholek(X + dx, Y + dy);
-                Krawedz K = new Krawedz(X + dx, Y + dy, X + dx2, Y + dy2);
 
                 P0.lista_wierzcholkow.add(W);
-                P0.lista_krawedzi.add(K);
-                this.lista_wierzcholkow.add(W);
-                this.lista_krawedzi.add(K);
+                lista_wierzcholkow.add(W);
+
         }
 
         /* Pola typu 1 wraz z wierzcholkami i krawedziami, tworze i dodaje te ktorych jeszcze nie ma w liscie_wierzcholkow/krawedzi */
@@ -169,17 +258,15 @@ public Mapa(){
                 px = Wektory_pola_typ_1[i][0];
                 py = Wektory_pola_typ_1[i][1];
                 Pole P_i = new Pole(X + px, Y + py);
-                this.lista_pol.add(P_i);
+                lista_pol.add(P_i);
 
                 for (j = 0; j < 6; j++)
                 {
                         czy_znalazl_podobny = false;
-                        dx = P_i.x + Wektory_wierzcholki_krawedzie[j][0];
-                        dy = P_i.y + Wektory_wierzcholki_krawedzie[j][1];
-                        dx2 = P_i.x + Wektory_wierzcholki_krawedzie[j + 1][0];
-                        dy2 = P_i.y + Wektory_wierzcholki_krawedzie[j + 1][1];
+                        dx = P_i.x + Wektory_wierzcholki[j][0];
+                        dy = P_i.y + Wektory_wierzcholki[j][1];
 
-                        for (Wierzcholek W : this.lista_wierzcholkow)
+                        for (Wierzcholek W : lista_wierzcholkow)
                         {
                                 if (Math.abs(W.x - dx) < err && Math.abs(W.y - dy) < err)
                                 {
@@ -192,30 +279,9 @@ public Mapa(){
                         {
                                 Wierzcholek W = new Wierzcholek(dx, dy);
                                 P_i.lista_wierzcholkow.add(W);
-                                this.lista_wierzcholkow.add(W);
+                                lista_wierzcholkow.add(W);
                         }
 
-                        czy_znalazl_podobny = false;
-                        for (Krawedz K : this.lista_krawedzi)
-                        {
-                                if ((Math.abs(K.x1 - dx) < err && Math.abs(K.y1 - dy) < err) && (Math.abs(K.x2 - dx2) < err && Math.abs(K.y2 - dy2) < err))
-                                {
-                                        czy_znalazl_podobny = true;
-                                        P_i.lista_krawedzi.add(K);
-                                        break;
-                                } else if ((Math.abs(K.x2 - dx) < err && Math.abs(K.y2 - dy) < err) && (Math.abs(K.x1 - dx2) < err && Math.abs(K.y1 - dy2) < err))
-                                {
-                                        czy_znalazl_podobny = true;
-                                        P_i.lista_krawedzi.add(K);
-                                        break;
-                                }
-                        }
-                        if (!czy_znalazl_podobny)
-                        {
-                                Krawedz K = new Krawedz(dx, dy, dx2, dy2);
-                                P_i.lista_krawedzi.add(K);
-                                this.lista_krawedzi.add(K);
-                        }
                 }
         }
 
@@ -226,17 +292,15 @@ public Mapa(){
                 py = Wektory_pola_typ_2_i_3[i][1];
 
                 Pole P_i = new Pole(X + px, Y + py);
-                this.lista_pol.add(P_i);
+                lista_pol.add(P_i);
 
                 for (j = 0; j < 6; j++)
                 {
                         czy_znalazl_podobny = false;
-                        dx = P_i.x + Wektory_wierzcholki_krawedzie[j][0];
-                        dy = P_i.y + Wektory_wierzcholki_krawedzie[j][1];
-                        dx2 = P_i.x + Wektory_wierzcholki_krawedzie[j + 1][0];
-                        dy2 = P_i.y + Wektory_wierzcholki_krawedzie[j + 1][1];
+                        dx = P_i.x + Wektory_wierzcholki[j][0];
+                        dy = P_i.y + Wektory_wierzcholki[j][1];
 
-                        for (Wierzcholek W : this.lista_wierzcholkow)
+                        for (Wierzcholek W : lista_wierzcholkow)
                         {
                                 if (Math.abs(W.x - dx) < err && Math.abs(W.y - dy) < err)
                                 {
@@ -249,29 +313,7 @@ public Mapa(){
                         {
                                 Wierzcholek W = new Wierzcholek(dx, dy);
                                 P_i.lista_wierzcholkow.add(W);
-                                this.lista_wierzcholkow.add(W);
-                        }
-
-                        czy_znalazl_podobny = false;
-                        for (Krawedz K : this.lista_krawedzi)
-                        {
-                                if ((Math.abs(K.x1 - dx) < err && Math.abs(K.y1 - dy) < err) && (Math.abs(K.x2 - dx2) < err && Math.abs(K.y2 - dy2) < err))
-                                {
-                                        czy_znalazl_podobny = true;
-                                        P_i.lista_krawedzi.add(K);
-                                        break;
-                                } else if ((Math.abs(K.x2 - dx) < err && Math.abs(K.y2 - dy) < err) && (Math.abs(K.x1 - dx2) < err && Math.abs(K.y1 - dy2) < err))
-                                {
-                                        czy_znalazl_podobny = true;
-                                        P_i.lista_krawedzi.add(K);
-                                        break;
-                                }
-                        }
-                        if (!czy_znalazl_podobny)
-                        {
-                                Krawedz K = new Krawedz(dx, dy, dx2, dy2);
-                                P_i.lista_krawedzi.add(K);
-                                this.lista_krawedzi.add(K);
+                                lista_wierzcholkow.add(W);
                         }
                 }
         }
@@ -283,17 +325,15 @@ public Mapa(){
                 py = Wektory_pola_typ_2_i_3[i][1] * 2;
 
                 Pole P_i = new Pole(X + px, Y + py);
-                this.lista_pol.add(P_i);
+                lista_pol.add(P_i);
 
                 for (j = 0; j < 6; j++)
                 {
                         czy_znalazl_podobny = false;
-                        dx = P_i.x + Wektory_wierzcholki_krawedzie[j][0];
-                        dy = P_i.y + Wektory_wierzcholki_krawedzie[j][1];
-                        dx2 = P_i.x + Wektory_wierzcholki_krawedzie[j + 1][0];
-                        dy2 = P_i.y + Wektory_wierzcholki_krawedzie[j + 1][1];
+                        dx = P_i.x + Wektory_wierzcholki[j][0];
+                        dy = P_i.y + Wektory_wierzcholki[j][1];
 
-                        for (Wierzcholek W : this.lista_wierzcholkow)
+                        for (Wierzcholek W : lista_wierzcholkow)
                         {
                                 if (Math.abs(W.x - dx) < err && Math.abs(W.y - dy) < err)
                                 {
@@ -306,35 +346,13 @@ public Mapa(){
                         {
                                 Wierzcholek W = new Wierzcholek(dx, dy);
                                 P_i.lista_wierzcholkow.add(W);
-                                this.lista_wierzcholkow.add(W);
-                        }
-
-                        czy_znalazl_podobny = false;
-                        for (Krawedz K : this.lista_krawedzi)
-                        {
-                                if ((Math.abs(K.x1 - dx) < err && Math.abs(K.y1 - dy) < err) && (Math.abs(K.x2 - dx2) < err && Math.abs(K.y2 - dy2) < err))
-                                {
-                                        czy_znalazl_podobny = true;
-                                        P_i.lista_krawedzi.add(K);
-                                        break;
-                                } else if ((Math.abs(K.x2 - dx) < err && Math.abs(K.y2 - dy) < err) && (Math.abs(K.x1 - dx2) < err && Math.abs(K.y1 - dy2) < err))
-                                {
-                                        czy_znalazl_podobny = true;
-                                        P_i.lista_krawedzi.add(K);
-                                        break;
-                                }
-                        }
-                        if (!czy_znalazl_podobny)
-                        {
-                                Krawedz K = new Krawedz(dx, dy, dx2, dy2);
-                                P_i.lista_krawedzi.add(K);
-                                this.lista_krawedzi.add(K);
+                                lista_wierzcholkow.add(W);
                         }
                 }
         }
+        stworz_krawedzie_ustaw_wskazniki_na_sasiadow();
         losuj_wartosci_i_zasoby_na_polach();
 }
-
 }
 
 /* Kolejność działań: Ustawiam pole początkowe P0 -- środek mapy, dla niego ustawiam 18 innych pól,

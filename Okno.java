@@ -54,24 +54,29 @@ import java.awt.image.BufferedImage;
 
 public class Okno extends JFrame {
 
-public static JPanel panel = new JPanel();
+public static JPanel panel_gracza = new JPanel();
 public static PanelMapa panel_mapa = new PanelMapa();
+public static JTextArea siema = new JTextArea("Witam");
 
 
 public Okno() {
         super("SOLAR SYSTEM");
 
+
+
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setSize(2200, 1600);
+        setSize(1700, 1000);
         setBackground(Color.BLACK);
 
-        add(panel);
-        panel.setBackground(Color.ORANGE);
-        add(panel_mapa);
+        add(panel_gracza);
+        panel_gracza.setSize(123, 123);
+        panel_gracza.setBackground(Color.ORANGE);
+        panel_gracza.add(siema);
+        add(panel_mapa, BorderLayout.CENTER);
         panel_mapa.setBackground(new Color(162, 222, 255));
 
         setVisible(true);
-        repaint();
+
 }
 
 }
