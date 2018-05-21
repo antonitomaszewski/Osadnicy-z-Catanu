@@ -1,7 +1,8 @@
 import java.awt.Color;
+import java.util.ArrayList;
 
 public class Krawedz {
-  
+
 public int x1;
 public int y1;
 public int x2;
@@ -13,39 +14,23 @@ public int nr_gracza = -1;
 public String nazwa_gracza = "";
 public Color kolor_gracza = Color.WHITE;
 
-
-public Krawedz(int x1, int y1, int x2, int y2)
-{
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
-
-        is_empty = true;
-
-        // dodatek w ostatecznej wersji usunac
-        this.nr_gracza = -1;
+public Wierzcholek wierzcholek_tworzacy_1;
+public Wierzcholek wierzcholek_tworzacy_2;
+public Krawedz(Wierzcholek W1, Wierzcholek W2) {
+        x1 = W1.x;
+        y1 = W1.y;
+        x2 = W2.x;
+        y2 = W2.y;
+        wierzcholek_tworzacy_1 = W1;
+        wierzcholek_tworzacy_2 = W2;
 }
 
-// dodatek ostatecznie tylko is_empty i funkcja jest bezargumentowa
-public void zbuduj_droge(int gracz, String nazwa, Color kolor)
-{
-        if (this.is_empty && this.nr_gracza == -1)
-        {
-                this.is_empty = false;
-                this.nr_gracza = gracz;
-                this.nazwa_gracza = nazwa;
-                this.kolor_gracza = kolor;
-                return;
-        } else
-        {
-                System.out.println("Błąd w budowaniu drogi");
-                return;
-        }
-}
-public boolean czy_wolne_droga()
-{
-        return this.is_empty;
-}
 
+public void zbuduj_droge(int gracz, String nazwa, Color kolor) {
+        this.is_empty = false;
+        this.nr_gracza = gracz;
+        this.nazwa_gracza = nazwa;
+        this.kolor_gracza = kolor;
+        return;
+}
 }
