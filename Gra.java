@@ -64,7 +64,7 @@ public Gra(String[] imiona, Color[] kolory){
 public void nowa_runda(){
         int suma_na_kostkach;
         suma_na_kostkach = wylosuj_i_rozdaj_surowce();
-        gracz_działania(suma_na_kostkach);
+        gracz_dzialania(suma_na_kostkach);
 
 
 
@@ -77,7 +77,7 @@ public void nowa_runda(){
         return;
 }
 
-public void gracz_działania(int suma_na_kostkach){
+public void gracz_dzialania(int suma_na_kostkach){
 
         boolean koniec_kolejki = budujemy_droge = budujemy_osade = budujemy_miasto = false;
         int x, y;
@@ -234,7 +234,7 @@ public void ostatnia_kolejka(){
         {
                 int suma_na_kostkach;
                 suma_na_kostkach = wylosuj_i_rozdaj_surowce();
-                gracz_działania(suma_na_kostkach);
+                gracz_dzialania(suma_na_kostkach);
                 /* TODO */
         }
         wypisz_podium();
