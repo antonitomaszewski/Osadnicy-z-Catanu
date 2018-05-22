@@ -41,22 +41,30 @@ public Gra(String[] imiona, Color[] kolory){
         for (Gracz G : lista_graczy) {
                 dostepne_osady = Mapa.dostepne_lokalizacje_pierwszej_osady();
                 /* jakaś funkcja łapiąca wybrany przez gracza wierzchołek W */
-                zbuduj_pierwsza_osade_ktora_wybral_gracz(G, x, y);
+                do {
+                        /* TODO ŁAP x i y */
+                } while(!zbuduj_pierwsza_lub_druga_osade_ktora_wybral_gracz(G, x, y));
 
                 dostepne_drogi = Mapa.dostepne_lokalizacje_pierwszej_drogi(G);
                 /* analogiczna funkcja co do osady, teraz dla krawędzi -- drogi */
-                zbuduj_pierwsza_droge_ktora_wybral_gracz(G, x, y);
+                do {
+                        /* TODO ŁAP x i y */
+                } while(!zbuduj_pierwsza_lub_druga_droge_ktora_wybral_gracz(G, x, y));
         }
         for (int i = liczba_graczy - 1; i >= 0; i--)
         {
                 Gracz G = lista_graczy.get(i);
                 dostepne_osady = Mapa.dostepne_lokalizacje_pierwszej_osady();
                 /* jakaś funkcja łapiąca wybrany przez gracza wierzchołek W */
-                zbuduj_pierwsza_osade_ktora_wybral_gracz(G, x, y);
+                do {
+                        /* TODO ŁAP x i y */
+                } while(!zbuduj_pierwsza_lub_druga_osade_ktora_wybral_gracz(G, x, y));
 
                 dostepne_drogi = Mapa.dostepne_lokalizacje_pierwszej_drogi(G);
                 /* analogiczna funkcja co do osady, teraz dla krawędzi -- drogi */
-                zbuduj_pierwsza_droge_ktora_wybral_gracz(G, x, y);
+                do {
+                        /* TODO ŁAP x i y */
+                } while(!zbuduj_pierwsza_lub_druga_droge_ktora_wybral_gracz(G, x, y));
         }
         pierwsza_runda_rozdaj_surowce();
         nowa_runda();
@@ -118,23 +126,25 @@ public void gracz_dzialania(int suma_na_kostkach){
         /* TUTAJ TRZEBA ZAIMPLEMENTOWAĆ WSZYSKIE DZIAŁANIA JAKIE MOŻE PODJĄĆ GRACZ I POWIĄZAĆ Z NIMI DZIAŁANIA NA MAPIE */
 }
 /* FUNKCJIE DZIAŁAŃ GRACZA  -- Początek */
-public void zbuduj_pierwsza_osade_ktora_wybral_gracz(Gracz G, int x, int y){
+public boolean zbuduj_pierwsza_lub_druga_osade_ktora_wybral_gracz(Gracz G, int x, int y){
         for (Wierzcholek W : dostepne_osady) {
                 if (W.czy_to_tu(x, y)) {
                         G.zbuduj_pierwsza_lub_druga_osade(W);
-                        return;
+                        return true;
                 }
         }
+        return false;
 }
-public void zbuduj_pierwsza_lub_druga_droge_ktora_wybral_gracz(Gracz G, int x, int y){
+public boolean zbuduj_pierwsza_lub_druga_droge_ktora_wybral_gracz(Gracz G, int x, int y){
         for (Wierzcholek W : dostepne_drogi) {
                 for (Krawedz K : W.sasiednie_krawedzie) {
                         if (K.czy_to_tu(x, y)) {
                                 G.zbuduj_pierwsza_lub_druga_droge(K);
-                                return;
+                                return true;
                         }
                 }
         }
+        return false;
 }
 public void przestaw_zlodzieja_na_pole_ktore_wybral_gracz(Gracz G, int x, int y){
         for (Pole P : Mapa.lista_pol) {
