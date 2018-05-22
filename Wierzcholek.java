@@ -35,12 +35,23 @@ public void zbuduj_osade(int gracz, String imie, Color kolor) {
         this.budynek = 1;
         return;
 }
-
-
 public void zbuduj_miasto() {
         this.budynek = 2;
         return;
 }
+
+public boolean czy_to_tu(int x, int y){
+        int err = 7;
+        return ((Math.abs(this.x - x) < err) && (Math.abs(this.y - y) < err));
+}
+
+
+
+
+
+
+
+
 public void wypisz() {
         for (Wierzcholek W :  sasiednie_wierzcholki) {
                 System.out.println(W.toString());
@@ -48,8 +59,6 @@ public void wypisz() {
         System.out.println(this.toString());
         return;
 }
-
-
 /**
  * Create string representation of Wierzcholek for printing
  * @return

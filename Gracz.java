@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -29,8 +27,7 @@ public Gracz(int nr, String nazwa, Color color) {
         imie = nazwa;
         kolor = color;
 }
-
-
+/* FUNKCJA DO WRZUCANIA NOWYCH WIERZCHOŁKÓW DO LISTY JUŻ OKUPOWANYCH -- drogi_osady_i_miasta */
 public boolean czy_wierzcholek_juz_jest(Wierzcholek W) {
         for (Wierzcholek W_i : drogi_osady_i_miasta) {
                 if (W.x == W_i.x && W.y == W_i.y) {
@@ -40,9 +37,8 @@ public boolean czy_wierzcholek_juz_jest(Wierzcholek W) {
         return false;
 }
 
-
-
-public void pierwsza_osada(Wierzcholek W){
+/* FUNKCJE DO ZBUDOWANIA PIERWSZYCH DWÓCH OSAD WRAZ Z ICH DROGAMI -- Początek */
+public void zbuduj_pierwsza_lub_druga_osade(Wierzcholek W){
         W.zbuduj_osade(this.numer, this.imie, this.kolor);
         drogi_osady_i_miasta.add(W);
         punkty++;
@@ -50,7 +46,7 @@ public void pierwsza_osada(Wierzcholek W){
         pozostale_osady--;
         return;
 }
-public void pierwsza_droga(Krawedz K){
+public void zbuduj_pierwsza_lub_druga_droge(Krawedz K){
         K.zbuduj_droge(this.numer, this.imie, this.kolor);
         if (!czy_wierzcholek_juz_jest(K.wierzcholek_tworzacy_1)) {
                 drogi_osady_i_miasta.add(K.wierzcholek_tworzacy_1);
@@ -61,25 +57,7 @@ public void pierwsza_droga(Krawedz K){
         pozostale_drogi--;
         return;
 }
-public void druga_osada(Wierzcholek W){
-        W.zbuduj_osade(this.numer, this.imie, this.kolor);
-        drogi_osady_i_miasta.add(W);
-        punkty++;
-        postawione_osady++;
-        pozostale_osady--;
-        return;
-}
-public void druga_droga(Krawedz K){
-        K.zbuduj_droge(this.numer, this.imie, this.kolor);
-        if (!czy_wierzcholek_juz_jest(K.wierzcholek_tworzacy_1)) {
-                drogi_osady_i_miasta.add(K.wierzcholek_tworzacy_1);
-        } else if (!czy_wierzcholek_juz_jest(K.wierzcholek_tworzacy_2)) {
-                drogi_osady_i_miasta.add(K.wierzcholek_tworzacy_2);
-        }
-        postawione_drogi++;
-        pozostale_drogi--;
-        return;
-}
+/* FUNKCJE DO ZBUDOWANIA PIERWSZYCH DWÓCH OSAD WRAZ Z ICH DROGAMI -- Koniec */
 
 
 /* FUNKCJA DO ZNAJDYWANIA POTENCJALNYCH MIAST */
@@ -93,14 +71,7 @@ public ArrayList<Wierzcholek> znajdz_wszyskie_dostepne_lokalizacje_miast() {
         }
         return dostepne_miasta;
 }
-
 /* FUNKCJA DO ZNAJDYWANIA POTENCJALNYCH DRÓG */
-public boolean czy_droga_nie_przetnie_osady(Wierzcholek W) {
-        /* TODO */
-        return false;
-}
-
-
 public ArrayList<Krawedz> znajdz_wszyskie_dostepne_lokalizacje_drog() {
         ArrayList<Krawedz> dostepne_drogi = new ArrayList<Krawedz>();
         for (Wierzcholek W : drogi_osady_i_miasta) {
@@ -114,7 +85,6 @@ public ArrayList<Krawedz> znajdz_wszyskie_dostepne_lokalizacje_drog() {
         }
         return dostepne_drogi;
 }
-
 /* FUNKCJE DO ZNAJDYWANIA POTENCJALNYCH OSAD */
 public boolean czy_wszystkie_sasiadujace_wierzcholki_puste(Wierzcholek W) {
         for (Wierzcholek W_i : W.sasiednie_wierzcholki) {
@@ -162,6 +132,7 @@ public void zbuduj_droge(Krawedz K){
 }
 public void zbuduj_osade(Wierzcholek W){
         W.zbuduj_osade(this.numer, this.imie, this.kolor);
+
         this.zabierz(1, "owca");
         this.zabierz(1, "siano");
         this.zabierz(1, "drewno");
@@ -172,7 +143,8 @@ public void zbuduj_osade(Wierzcholek W){
         return;
 }
 public void zbuduj_miasto(Wierzcholek W){
-        W.zbuduj_miasto(); // zakładam, że wtedy wartość w wierzchołku W, w którym gracz ma już osade zmieni się także w liscie osad_i_miast
+        W.zbuduj_miasto();
+
         this.zabierz(2, "siano");
         this.zabierz(3, "kamien");
 
@@ -186,12 +158,12 @@ public void zbuduj_miasto(Wierzcholek W){
 }
 
 public boolean czy_mozna_postawic_droge(){
-        return (this.surowce.drewno > 0 && this.surowce.cegla > 0 && this.postawione_drogi < 15);
+        return (surowce.drewno >= 1 && surowce.cegla >= 1 && pozostale_drogi > 0);
 }
 public boolean czy_mozna_postawic_osade(){
-        return (this.surowce.owca > 0 && this.surowce.siano > 0 && this.surowce.drewno > 0 && this.surowce.cegla > 0 && this.postawione_osady < 5);
+        return (surowce.owca >= 1 && surowce.siano >= 1 && surowce.drewno >= 1 && surowce.cegla >= 1 && pozostale_osady > 0);
 }
 public boolean czy_mozna_postawic_miasto(){
-        return (this.surowce.siano > 1 && this.surowce.kamien > 2 && this.postawione_miasta < 4);
+        return (surowce.siano >= 2 && surowce.kamien >= 3 && pozostale_miasta > 0);
 }
 }

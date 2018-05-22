@@ -6,72 +6,49 @@ public static void main(String[] args) {
 
         new Okno();
         Mapa Map = new Mapa();
-        Gracz G = new Gracz(1, "A", Color.BLACK);
-        Gracz G2 = new Gracz(2, "B", Color.BLUE);
+        Gracz G = new Gracz(1, "A", new Color(170, 79, 49));
+        Gracz G2 = new Gracz(2, "B", Color.darkGray);
+        Gracz G3 = new Gracz(3, "C", Color.pink);
+        ArrayList<Wierzcholek> dostepne_osady = new ArrayList<Wierzcholek>();
+        ArrayList<Krawedz> dostepne_drogi  = new ArrayList<Krawedz>();
 
-        G.pierwsza_osada(Map.lista_wierzcholkow.get(0));
-        ArrayList<Krawedz> drogi = Map.dostepne_lokalizacje_pierwszej_drogi(G);
-        G.pierwsza_droga(drogi.get(0));
+        dostepne_osady = Map.dostepne_lokalizacje_pierwszej_lub_drugiej_osady();
+        G.zbuduj_pierwsza_lub_druga_osade(dostepne_osady.get(10));
+        dostepne_drogi = Map.dostepne_lokalizacje_pierwszej_lub_drugiej_drogi(G);
+        G.zbuduj_pierwsza_lub_druga_droge(dostepne_drogi.get(2));
 
-        ArrayList<Wierzcholek> osady_i_miasta = Map.dostepne_lokalizacje_pierwszej_osady();
-        G2.pierwsza_osada(osady_i_miasta.get(0));
-        drogi = Map.dostepne_lokalizacje_pierwszej_drogi(G2);
-        G2.pierwsza_droga(drogi.get(0));
+        dostepne_osady = Map.dostepne_lokalizacje_pierwszej_lub_drugiej_osady();
+        G2.zbuduj_pierwsza_lub_druga_osade(dostepne_osady.get(10));
+        dostepne_drogi = Map.dostepne_lokalizacje_pierwszej_lub_drugiej_drogi(G2);
+        G2.zbuduj_pierwsza_lub_druga_droge(dostepne_drogi.get(1));
+
+        dostepne_osady = Map.dostepne_lokalizacje_pierwszej_lub_drugiej_osady();
+        G3.zbuduj_pierwsza_lub_druga_osade(dostepne_osady.get(10));
+        dostepne_drogi = Map.dostepne_lokalizacje_pierwszej_lub_drugiej_drogi(G3);
+        G3.zbuduj_pierwsza_lub_druga_droge(dostepne_drogi.get(1));
 
 
 
+        dostepne_osady = Map.dostepne_lokalizacje_pierwszej_lub_drugiej_osady();
+        G3.zbuduj_pierwsza_lub_druga_osade(dostepne_osady.get(10));
+        dostepne_drogi = Map.dostepne_lokalizacje_pierwszej_lub_drugiej_drogi(G3);
+        G3.zbuduj_pierwsza_lub_druga_droge(dostepne_drogi.get(1));
 
-        G.druga_osada(Map.lista_wierzcholkow.get(15));
-        drogi = Map.dostepne_lokalizacje_drugiej_drogi(G);
-        G.druga_droga(drogi.get(0));
+        dostepne_osady = Map.dostepne_lokalizacje_pierwszej_lub_drugiej_osady();
+        G2.zbuduj_pierwsza_lub_druga_osade(dostepne_osady.get(10));
+        dostepne_drogi = Map.dostepne_lokalizacje_pierwszej_lub_drugiej_drogi(G2);
+        G2.zbuduj_pierwsza_lub_druga_droge(dostepne_drogi.get(1));
 
-        osady_i_miasta = G.znajdz_wszyskie_dostepne_lokalizacje_miast();
-        for (Wierzcholek W : osady_i_miasta) {
-                G.zbuduj_miasto(W);
-        }
+        dostepne_osady = Map.dostepne_lokalizacje_pierwszej_lub_drugiej_osady();
+        G.zbuduj_pierwsza_lub_druga_osade(dostepne_osady.get(15));
+        dostepne_drogi = Map.dostepne_lokalizacje_pierwszej_lub_drugiej_drogi(G);
+        G.zbuduj_pierwsza_lub_druga_droge(dostepne_drogi.get(0));
 
-        drogi = G.znajdz_wszyskie_dostepne_lokalizacje_drog();
-        for (Krawedz K : drogi) {
-                G.zbuduj_droge(K);
-        }
+        dostepne_drogi = G.znajdz_wszyskie_dostepne_lokalizacje_drog();
+        G.zbuduj_droge(dostepne_drogi.get(2));
 
-        osady_i_miasta = G.znajdz_wszyskie_dostepne_lokalizacje_osad();
-        for (Wierzcholek W : osady_i_miasta) {
-                G.zbuduj_osade(W);
-        }
 
-        drogi = G2.znajdz_wszyskie_dostepne_lokalizacje_drog();
-        for (Krawedz K : drogi) {
-                G2.zbuduj_droge(K);
-        }
-        drogi = G2.znajdz_wszyskie_dostepne_lokalizacje_drog();
-        for (Krawedz K : drogi) {
-                G2.zbuduj_droge(K);
-        }
-        osady_i_miasta = G2.znajdz_wszyskie_dostepne_lokalizacje_osad();
-        for (Wierzcholek W : osady_i_miasta) {
-                G2.zbuduj_osade(W);
-        }
-        drogi = G2.znajdz_wszyskie_dostepne_lokalizacje_drog();
-        for (Krawedz K : drogi) {
-                G2.zbuduj_droge(K);
-        }
-        osady_i_miasta = G2.znajdz_wszyskie_dostepne_lokalizacje_osad();
-        for (Wierzcholek W : osady_i_miasta) {
-                G2.zbuduj_osade(W);
-        }
-        drogi = G2.znajdz_wszyskie_dostepne_lokalizacje_drog();
-        for (Krawedz K : drogi) {
-                G2.zbuduj_droge(K);
-        }
-        osady_i_miasta = G2.znajdz_wszyskie_dostepne_lokalizacje_osad();
-        for (Wierzcholek W : osady_i_miasta) {
-                G2.zbuduj_osade(W);
-        }
-        drogi = G.znajdz_wszyskie_dostepne_lokalizacje_drog();
-        for (Krawedz K : drogi) {
-                G.zbuduj_droge(K);
-        }
+
         return;
 }
 }

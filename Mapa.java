@@ -13,7 +13,7 @@ public int err = 7;
 public int length = 100;
 
 
-/* FUNKCJE DO ZNAJDYWANIA PIERWSZYCH DWÓCH OSAD I DRÓG  -- TYLKO ONE Z POZIOMU MAPY, NASTĘPNE U GRACZA */
+/* FUNKCJE DO ZNAJDYWANIA PIERWSZYCH DWÓCH OSAD I DRÓG  -- TYLKO ONE Z POZIOMU MAPY, NASTĘPNE U GRACZA  -- Początek */
 public boolean czy_wierzcholek_dostepny(Wierzcholek W) {
         if (!W.is_empty) {
                 return false;
@@ -25,7 +25,7 @@ public boolean czy_wierzcholek_dostepny(Wierzcholek W) {
         }
         return true;
 }
-public ArrayList<Wierzcholek> dostepne_lokalizacje_pierwszej_osady() {
+public ArrayList<Wierzcholek> dostepne_lokalizacje_pierwszej_lub_drugiej_osady() {
         ArrayList<Wierzcholek> dostepne_osady = new ArrayList<Wierzcholek>();
         for (Wierzcholek W : lista_wierzcholkow) {
                 if (czy_wierzcholek_dostepny(W)) {
@@ -35,32 +35,17 @@ public ArrayList<Wierzcholek> dostepne_lokalizacje_pierwszej_osady() {
         return dostepne_osady;
 }
 
-public ArrayList<Krawedz> dostepne_lokalizacje_pierwszej_drogi(Gracz G) {
+public ArrayList<Krawedz> dostepne_lokalizacje_pierwszej_lub_drugiej_drogi(Gracz G) {
         ArrayList<Krawedz> dostepne_drogi = new ArrayList<Krawedz>();
-        Wierzcholek pierwszy_wierzcholek = G.drogi_osady_i_miasta.get(0);
-        for (Krawedz K : pierwszy_wierzcholek.sasiednie_krawedzie) {
+        Wierzcholek pierwszy_lub_drugi_wierzcholek = G.drogi_osady_i_miasta.get(G.drogi_osady_i_miasta.size() - 1);
+        for (Krawedz K : pierwszy_lub_drugi_wierzcholek.sasiednie_krawedzie) {
                 dostepne_drogi.add(K);
         }
         return dostepne_drogi;
 }
+/* FUNKCJE DO ZNAJDYWANIA PIERWSZYCH DWÓCH OSAD I DRÓG  -- TYLKO ONE Z POZIOMU MAPY, NASTĘPNE U GRACZA  -- Koniec */
 
-public ArrayList<Wierzcholek> dostepne_lokalizacje_drugiej_osady() {
-        ArrayList<Wierzcholek> dostepne_osady = new ArrayList<Wierzcholek>();
-        for (Wierzcholek W : lista_wierzcholkow) {
-                if (czy_wierzcholek_dostepny(W)) {
-                        dostepne_osady.add(W);
-                }
-        }
-        return dostepne_osady;
-}
-public ArrayList<Krawedz> dostepne_lokalizacje_drugiej_drogi(Gracz G) {
-        ArrayList<Krawedz> dostepne_drogi = new ArrayList<Krawedz>();
-        Wierzcholek pierwszy_wierzcholek = G.drogi_osady_i_miasta.get(2);
-        for (Krawedz K : pierwszy_wierzcholek.sasiednie_krawedzie) {
-                dostepne_drogi.add(K);
-        }
-        return dostepne_drogi;
-}
+
 
 
 /* STWÓRZ MAPĘ */
