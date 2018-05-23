@@ -39,13 +39,13 @@ public Gra(String[] imiona, Color[] kolory){
 
         int x, y;
         for (Gracz G : lista_graczy) {
-                dostepne_osady = Mapa.dostepne_lokalizacje_pierwszej_osady();
+                dostepne_osady = Mapa.dostepne_lokalizacje_pierwszej_lub_drugiej_osady();
                 /* jakaś funkcja łapiąca wybrany przez gracza wierzchołek W */
                 do {
                         /* TODO ŁAP x i y */
                 } while(!zbuduj_pierwsza_lub_druga_osade_ktora_wybral_gracz(G, x, y));
 
-                dostepne_drogi = Mapa.dostepne_lokalizacje_pierwszej_drogi(G);
+                dostepne_drogi = Mapa.dostepne_lokalizacje_pierwszej_lub_drugiej_drogi(G);
                 /* analogiczna funkcja co do osady, teraz dla krawędzi -- drogi */
                 do {
                         /* TODO ŁAP x i y */
@@ -54,13 +54,13 @@ public Gra(String[] imiona, Color[] kolory){
         for (int i = liczba_graczy - 1; i >= 0; i--)
         {
                 Gracz G = lista_graczy.get(i);
-                dostepne_osady = Mapa.dostepne_lokalizacje_pierwszej_osady();
+                dostepne_osady = Mapa.dostepne_lokalizacje_pierwszej_lub_drugiej_osady();
                 /* jakaś funkcja łapiąca wybrany przez gracza wierzchołek W */
                 do {
                         /* TODO ŁAP x i y */
                 } while(!zbuduj_pierwsza_lub_druga_osade_ktora_wybral_gracz(G, x, y));
 
-                dostepne_drogi = Mapa.dostepne_lokalizacje_pierwszej_drogi(G);
+                dostepne_drogi = Mapa.dostepne_lokalizacje_pierwszej_lub_drugiej_drogi(G);
                 /* analogiczna funkcja co do osady, teraz dla krawędzi -- drogi */
                 do {
                         /* TODO ŁAP x i y */
@@ -87,7 +87,7 @@ public void nowa_runda(){
 
 public void gracz_dzialania(int suma_na_kostkach){
 
-        boolean koniec_kolejki = budujemy_droge = budujemy_osade = budujemy_miasto = false;
+        boolean koniec_kolejki = budujemy_droge = budujemy_osade = budujemy_miasto = podswietl_wszystkie_mozliwosci =  false; // podswietl_wszystkie_mozliwosci -- dodałbym taki przycisk, wydaje się rozsądny
         int x, y;
         Gracz G = lista_graczy.get(kolejka);
 
@@ -97,7 +97,11 @@ public void gracz_dzialania(int suma_na_kostkach){
         }
         while (!koniec_kolejki) {
                 /* TODO WYŁAP JAKĄ DECYZJĘ EKONOMICZNĄ PODJĄŁ */
-                if (budujemy_droge) {
+                if (podswietl_wszystkie_mozliwosci) {
+                        dostepne_drogi = G.znajdz_wszyskie_dostepne_lokalizacje_drog();
+                        dostepne_osady = G.znajdz_wszyskie_dostepne_lokalizacje_osad();
+                        dostepne_miasta = G.znajdz_wszyskie_dostepne_lokalizacje_miast();
+                } else if (budujemy_droge) {
                         if (G.czy_mozna_postawic_droge()) {
                                 dostepne_drogi = G.znajdz_wszyskie_dostepne_lokalizacje_drog();
                                 /* TODO ZNAJDUJESZ PUNKTY x i y */
@@ -146,6 +150,7 @@ public boolean zbuduj_pierwsza_lub_druga_droge_ktora_wybral_gracz(Gracz G, int x
         }
         return false;
 }
+
 public void przestaw_zlodzieja_na_pole_ktore_wybral_gracz(Gracz G, int x, int y){
         for (Pole P : Mapa.lista_pol) {
                 if (P.czy_to_tu(x, y)) {
