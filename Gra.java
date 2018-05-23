@@ -87,7 +87,7 @@ public void nowa_runda(){
 
 public void gracz_dzialania(int suma_na_kostkach){
 
-        boolean koniec_kolejki = budujemy_droge = budujemy_osade = budujemy_miasto = podswietl_wszystkie_mozliwosci =  false; // podswietl_wszystkie_mozliwosci -- dodałbym taki przycisk, wydaje się rozsądny
+        boolean koniec_kolejki = budujemy_droge = budujemy_osade = budujemy_miasto = false; // podswietl_wszystkie_mozliwosci -- dodałbym taki przycisk, wydaje się rozsądny
         int x, y;
         Gracz G = lista_graczy.get(kolejka);
 
@@ -97,15 +97,39 @@ public void gracz_dzialania(int suma_na_kostkach){
         }
         while (!koniec_kolejki) {
                 /* TODO WYŁAP JAKĄ DECYZJĘ EKONOMICZNĄ PODJĄŁ */
-                if (podswietl_wszystkie_mozliwosci) {
+                if (G.czy_mozna_postawic_droge()) {
                         dostepne_drogi = G.znajdz_wszyskie_dostepne_lokalizacje_drog();
+                } else {
+                        dostepne_drogi = new ArrayList<Krawedz>();
+                }
+                if (G.czy_mozna_postawic_osade()) {
                         dostepne_osady = G.znajdz_wszyskie_dostepne_lokalizacje_osad();
+                } else {
+                        dostepne_osady = new ArrayList<Wierzcholek>();
+                }
+                if (G.czy_mozna_postawic_miasto()) {
                         dostepne_miasta = G.znajdz_wszyskie_dostepne_lokalizacje_miast();
-                } else if (budujemy_droge) {
-                        if (G.czy_mozna_postawic_droge()) {
+                } else {
+                        dostepne_miasta = new ArrayList<Wierzcholek>();
+                }
+                /* WYŚWIETLANE SĄ WSZYSTKIE MOŻLIWOŚĆI ++ PEWNIE JEŚLI !G.czy_mozna_postawic_() to wtedy przycisk, jest nieaktywny */
+                if (dostepne_drogi.size() > 0) {
+                        /* WYŚWIETLANY PODGLĄD + PRZYCISK BĘDZIE AKTYWNY */
+                }
+                if (dostepne_osady.size() > 0) {
+                        /* WYŚWIETLANY PODGLĄD + PRZYCISK BĘDZIE AKTYWNY */
+                }
+                if (dostepne_miasta.size() > 0) {
+                        /* WYŚWIETLANY PODGLĄD + PRZYCISK BĘDZIE AKTYWNY */
+                }
+
+                /* TERAZ DOPÓKI GRACZ NIE WYBIERZE MIĘDZY ::  BUDOWA CZEGOŚ <> KONIEC KOLEJKI :: CZEKAMY */
+                /* WYBRAŁ JEDNĄ Z 4 MOŻLIWOŚCI, jeśli budowa, to trzeba będzie */
+                if (budujemy_droge) {
+                        if (G.czy_mozna_postawic_droge()) { // skoro mógł wybrać budujemy_droge, to nie trzeba będzie tego warunku już sprawdzać
                                 dostepne_drogi = G.znajdz_wszyskie_dostepne_lokalizacje_drog();
                                 /* TODO ZNAJDUJESZ PUNKTY x i y */
-                                zbuduj_droge_ktora_wybral_gracz(G, x, y);
+                                zbuduj_droge_ktora_wybral_gracz(G, x, y); // w ostatecznej wersji tylko ta linijka, skoro wybrał drogę, to możliwe, że należałoby je wyróżnić spośród wszystkich dostępnych możliwości budowy, analogicznie z osadą i miastem
                         } else {
                                 System.out.println("NIE MOŻNA ZBUDOWAĆ DROGI --- ZBYT MAŁO SUROWCÓW lub WSZYSTKIE WYKORZYSTANE");
                         }
