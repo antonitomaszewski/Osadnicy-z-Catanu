@@ -39,4 +39,15 @@ public void zabierz(int ile, String surowiec){
         }
 }
 
+
+
+/**
+ * Create string representation of Surowce for printing
+ * @return
+ */
+@Override
+public String toString() {
+        return "Surowce [owca=" + owca + ", siano=" + siano + ", drewno=" + drewno + ", cegla=" + cegla + ", kamien=" + kamien + "]";
+}
+
 }
