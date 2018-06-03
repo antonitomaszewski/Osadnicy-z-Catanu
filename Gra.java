@@ -6,7 +6,22 @@ import java.util.ArrayList;
    chyba, że jest to pole typu wbudowanego, wtedy nie będzie problemu nim operować */
 
 
-public class Gra {
+public class Gra extends Thread {
+
+public void run() {
+
+}
+public static void main(String args[]) {
+        String[] imiona = {"Antoni", "Andrzej", "Basia", "Domin"};
+        Color[] kolory = {Color.BLACK, Color.PINK, Color.RED, Color.BLUE};
+        (new Gra(imiona, kolory)).start();
+}
+
+
+
+
+
+
 public static Mapa Mapa = new Mapa();
 public static int liczba_graczy = 4;
 public static int nr_gracza_rozpoczynajacego = 1;
@@ -22,7 +37,6 @@ public static ArrayList<Wierzcholek> dostepne_osady = new ArrayList<Wierzcholek>
 public static ArrayList<Wierzcholek> dostepne_miasta = new ArrayList<Wierzcholek>();
 public static int x = -1;
 public static int y = -1;
-
 
 
 public static int kostka_pierwsza = -1;
@@ -76,10 +90,10 @@ public void samemu() {
                 do {
                         while (!wybrano_wspolrzedne) {
                                 try {
-                                        Thread.sleep(500);
-                                        Thread.currentThread().interrupt();
+                                        Gra.sleep(1000);
+                                        Gra.currentThread().interrupt();
                                 } catch (InterruptedException ex) {
-                                        Thread.currentThread().interrupt();
+                                        Gra.currentThread().interrupt();
                                 }
                         }
                         wybrano_wspolrzedne = false;
@@ -92,10 +106,10 @@ public void samemu() {
                 do {
                         while (!wybrano_wspolrzedne) {
                                 try {
-                                        Thread.sleep(500);
-                                        Thread.currentThread().interrupt();
+                                        Gra.sleep(1000);
+                                        Gra.currentThread().interrupt();
                                 } catch (InterruptedException ex) {
-                                        Thread.currentThread().interrupt();
+                                        Gra.currentThread().interrupt();
                                 }
                         }
                         wybrano_wspolrzedne = false;
@@ -111,10 +125,10 @@ public void samemu() {
                 do {
                         while (!wybrano_wspolrzedne) {
                                 try {
-                                        Thread.sleep(500);
-                                        Thread.currentThread().interrupt();
+                                        Gra.sleep(1000);
+                                        Gra.currentThread().interrupt();
                                 } catch (InterruptedException ex) {
-                                        Thread.currentThread().interrupt();
+                                        Gra.currentThread().interrupt();
                                 }
                         }
                         wybrano_wspolrzedne = false;
@@ -125,10 +139,10 @@ public void samemu() {
                 do {
                         while (!wybrano_wspolrzedne) {
                                 try {
-                                        Thread.sleep(500);
-                                        Thread.currentThread().interrupt();
+                                        Gra.sleep(1000);
+                                        Gra.currentThread().interrupt();
                                 } catch (InterruptedException ex) {
-                                        Thread.currentThread().interrupt();
+                                        Gra.currentThread().interrupt();
                                 }
                         }
                         wybrano_wspolrzedne = false;
@@ -149,11 +163,11 @@ public Gra(String[] imiona, Color[] kolory){
         }
         Okno = new Okno();
 
-        samemu();
-        // defaultowo();
-
+        // samemu();
+        defaultowo();
+        lista_graczy.get(nr_gracza_rozpoczynajacego - 1).punkty = 10;
         pierwsza_runda_rozdaj_surowce();
-        // wylosuj_przez_i_kolejek_surowce(50);
+        //wylosuj_przez_i_kolejek_surowce(200);
         // lista_graczy.get(0).punkty = 10;
         nowa_runda();
 }
@@ -168,9 +182,10 @@ public void nowa_runda(){
         if (czy_mamy_zwyciezce())
         {
                 ostatnia_kolejka();
+        } else {
+                kolejka = (kolejka + 1) % liczba_graczy;
+                nowa_runda();
         }
-        kolejka = (kolejka + 1) % liczba_graczy;
-        nowa_runda();
 }
 public static void ustaw_poczatkowe_listy_dostepnych_drog_osad_i_miast(){
         Gracz G = lista_graczy.get(kolejka);
@@ -199,10 +214,10 @@ public void better_gracz_dzialania(){
 //        wylosuj_i_rozdaj_surowce();
         while (!wylosowano) {
                 try {
-                        Thread.sleep(500);
-                        Thread.currentThread().interrupt();
+                        Gra.sleep(1000);
+                        Gra.currentThread().interrupt();
                 } catch (InterruptedException ex) {
-                        Thread.currentThread().interrupt();
+                        Gra.currentThread().interrupt();
                 }
         }
 
@@ -226,24 +241,24 @@ public void better_gracz_dzialania(){
 
                 try
                 {
-                        Thread.sleep(500);
-                        Thread.currentThread().interrupt();
+                        Gra.sleep(1000);
+                        Gra.currentThread().interrupt();
                 }
                 catch(InterruptedException ex)
                 {
-                        Thread.currentThread().interrupt();
+                        Gra.currentThread().interrupt();
                 }
                 if (budujemy_droge) {
                         /* TODO ZŁAP WSPÓŁRZĘDZNE KTÓRE WYBRAŁ GRACZ */
                         while(!wybrano_wspolrzedne) {
                                 try
                                 {
-                                        Thread.sleep(500);
-                                        Thread.currentThread().interrupt();
+                                        Gra.sleep(1000);
+                                        Gra.currentThread().interrupt();
                                 }
                                 catch(InterruptedException ex)
                                 {
-                                        Thread.currentThread().interrupt();
+                                        Gra.currentThread().interrupt();
                                 }
                         }
 
@@ -265,12 +280,12 @@ public void better_gracz_dzialania(){
                         while(!wybrano_wspolrzedne) {
                                 try
                                 {
-                                        Thread.sleep(500);
-                                        Thread.currentThread().interrupt();
+                                        Gra.sleep(1000);
+                                        Gra.currentThread().interrupt();
                                 }
                                 catch(InterruptedException ex)
                                 {
-                                        Thread.currentThread().interrupt();
+                                        Gra.currentThread().interrupt();
                                 }
                         }
 
@@ -297,12 +312,12 @@ public void better_gracz_dzialania(){
                         while(!wybrano_wspolrzedne) {
                                 try
                                 {
-                                        Thread.sleep(500);
-                                        Thread.currentThread().interrupt();
+                                        Gra.sleep(1000);
+                                        Gra.currentThread().interrupt();
                                 }
                                 catch(InterruptedException ex)
                                 {
-                                        Thread.currentThread().interrupt();
+                                        Gra.currentThread().interrupt();
                                 }
                         }
 
@@ -329,12 +344,12 @@ public void better_gracz_dzialania(){
                         while(!potwierdzono_transakcje_i_zamknieto) {
                                 try
                                 {
-                                        Thread.sleep(500);
-                                        Thread.currentThread().interrupt();
+                                        Gra.sleep(1000);
+                                        Gra.currentThread().interrupt();
                                 }
                                 catch(InterruptedException ex)
                                 {
-                                        Thread.currentThread().interrupt();
+                                        Gra.currentThread().interrupt();
                                 }
                         }
                         Wymiana.setAlwaysOnTop (false);
@@ -502,11 +517,15 @@ public boolean czy_mamy_zwyciezce(){
         return false;
 }
 public void ostatnia_kolejka(){
-        while (++kolejka < liczba_graczy)
+        while ((++kolejka) < liczba_graczy)
         {
+                ++runda;
+                wylosowano = false;
+                wybrano_wspolrzedne = false;
                 better_gracz_dzialania();
+                System.out.println(kolejka + " " + Gra.lista_graczy.get(kolejka).imie);
         }
-        wypisz_podium();
+        // wypisz_podium();
 }
 
 public void wypisz_podium(){
