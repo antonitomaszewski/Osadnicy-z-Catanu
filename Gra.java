@@ -90,7 +90,7 @@ public void samemu() {
                 do {
                         while (!wybrano_wspolrzedne) {
                                 try {
-                                        Gra.sleep(1000);
+                                        Gra.sleep(500);
                                         Gra.currentThread().interrupt();
                                 } catch (InterruptedException ex) {
                                         Gra.currentThread().interrupt();
@@ -106,7 +106,7 @@ public void samemu() {
                 do {
                         while (!wybrano_wspolrzedne) {
                                 try {
-                                        Gra.sleep(1000);
+                                        Gra.sleep(500);
                                         Gra.currentThread().interrupt();
                                 } catch (InterruptedException ex) {
                                         Gra.currentThread().interrupt();
@@ -125,7 +125,7 @@ public void samemu() {
                 do {
                         while (!wybrano_wspolrzedne) {
                                 try {
-                                        Gra.sleep(1000);
+                                        Gra.sleep(500);
                                         Gra.currentThread().interrupt();
                                 } catch (InterruptedException ex) {
                                         Gra.currentThread().interrupt();
@@ -139,7 +139,7 @@ public void samemu() {
                 do {
                         while (!wybrano_wspolrzedne) {
                                 try {
-                                        Gra.sleep(1000);
+                                        Gra.sleep(500);
                                         Gra.currentThread().interrupt();
                                 } catch (InterruptedException ex) {
                                         Gra.currentThread().interrupt();
@@ -165,7 +165,7 @@ public Gra(String[] imiona, Color[] kolory){
 
         // samemu();
         defaultowo();
-        lista_graczy.get(nr_gracza_rozpoczynajacego - 1).punkty = 10;
+        lista_graczy.get(0).punkty = 10;
         pierwsza_runda_rozdaj_surowce();
         //wylosuj_przez_i_kolejek_surowce(200);
         // lista_graczy.get(0).punkty = 10;
@@ -181,6 +181,7 @@ public void nowa_runda(){
 
         if (czy_mamy_zwyciezce())
         {
+                // wypisz_podium();
                 ostatnia_kolejka();
         } else {
                 kolejka = (kolejka + 1) % liczba_graczy;
@@ -214,7 +215,7 @@ public void better_gracz_dzialania(){
 //        wylosuj_i_rozdaj_surowce();
         while (!wylosowano) {
                 try {
-                        Gra.sleep(1000);
+                        Gra.sleep(500);
                         Gra.currentThread().interrupt();
                 } catch (InterruptedException ex) {
                         Gra.currentThread().interrupt();
@@ -241,7 +242,7 @@ public void better_gracz_dzialania(){
 
                 try
                 {
-                        Gra.sleep(1000);
+                        Gra.sleep(500);
                         Gra.currentThread().interrupt();
                 }
                 catch(InterruptedException ex)
@@ -253,7 +254,7 @@ public void better_gracz_dzialania(){
                         while(!wybrano_wspolrzedne) {
                                 try
                                 {
-                                        Gra.sleep(1000);
+                                        Gra.sleep(500);
                                         Gra.currentThread().interrupt();
                                 }
                                 catch(InterruptedException ex)
@@ -280,7 +281,7 @@ public void better_gracz_dzialania(){
                         while(!wybrano_wspolrzedne) {
                                 try
                                 {
-                                        Gra.sleep(1000);
+                                        Gra.sleep(500);
                                         Gra.currentThread().interrupt();
                                 }
                                 catch(InterruptedException ex)
@@ -312,7 +313,7 @@ public void better_gracz_dzialania(){
                         while(!wybrano_wspolrzedne) {
                                 try
                                 {
-                                        Gra.sleep(1000);
+                                        Gra.sleep(500);
                                         Gra.currentThread().interrupt();
                                 }
                                 catch(InterruptedException ex)
@@ -344,7 +345,7 @@ public void better_gracz_dzialania(){
                         while(!potwierdzono_transakcje_i_zamknieto) {
                                 try
                                 {
-                                        Gra.sleep(1000);
+                                        Gra.sleep(500);
                                         Gra.currentThread().interrupt();
                                 }
                                 catch(InterruptedException ex)
@@ -517,15 +518,16 @@ public boolean czy_mamy_zwyciezce(){
         return false;
 }
 public void ostatnia_kolejka(){
-        while ((++kolejka) < liczba_graczy)
+        while (++kolejka < liczba_graczy)
         {
                 ++runda;
                 wylosowano = false;
                 wybrano_wspolrzedne = false;
-                better_gracz_dzialania();
                 System.out.println(kolejka + " " + Gra.lista_graczy.get(kolejka).imie);
+                better_gracz_dzialania();
         }
-        // wypisz_podium();
+        kolejka--;  // JAK TEGO NIE MA TO PO KLIKNIĘCIU NA MAPĘ ZROBI SIĘ REPAINT, I BĘDZIE CHCIAŁ POBRAĆ obiekt z Gra.lista_graczy(liczba_graczy), a to o jeden indeks za dużo, wię naparzam kolejka-- i jest cacy
+        wypisz_podium();
 }
 
 public void wypisz_podium(){
