@@ -14,8 +14,8 @@ public void run() {
 public static void main(String args[]) {
         // String[] imiona = {"Antoni", "Andrzej", "Basia", "Domin"};
         // Color[] kolory = {Color.darkGray, Color.PINK, new Color(240,70,85), new Color(120, 159, 249)};
-        String [] imiona = {"Antoni", "Andrzej"};
-        Color[] kolory = {Color.darkGray, Color.PINK};
+        String [] imiona = {"Antoni", "Andrzej", "Mistrz", "Filip"};
+        Color[] kolory = {Color.darkGray, Color.PINK, new Color(240,70,85), new Color(120, 159, 249)};
         (new Gra(imiona, kolory)).start();
 }
 
@@ -396,6 +396,7 @@ public void better_gracz_dzialania(){
                         // Wymiana.setAlwaysOnTop (false);
                         // Okno.setAlwaysOnTop (true);
                         potwierdzono_transakcje_i_zamknieto = false;
+                        ustaw_poczatkowe_listy_dostepnych_drog_osad_i_miast();
                 }
                 else if (wymiana_z_graczem) {
                         Wymiana_z_Graczem.setVisible (true);
@@ -411,6 +412,7 @@ public void better_gracz_dzialania(){
                                 }
                         }
                         potwierdzono_transakcje_i_zamknieto = false;
+                        ustaw_poczatkowe_listy_dostepnych_drog_osad_i_miast();
                 }
                 // Wymiana.setAlwaysOnTop (false);
                 wymiana = budujemy_droge = budujemy_osade = budujemy_miasto = wybrano_wspolrzedne = false;
