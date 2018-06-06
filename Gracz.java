@@ -22,6 +22,8 @@ public Surowce surowce = new Surowce();
 public ArrayList<Wierzcholek> drogi_osady_i_miasta = new ArrayList<Wierzcholek>();
 
 /* KONSTRUKTOR I SPRAWDZONE FUNKCJE */
+public Gracz(){
+}
 public Gracz(int nr, String nazwa, Color color) {
         numer = nr;
         imie = nazwa;
@@ -64,7 +66,7 @@ public void zbuduj_pierwsza_lub_druga_droge(Krawedz K){
 public ArrayList<Wierzcholek> znajdz_wszyskie_dostepne_lokalizacje_miast() {
         ArrayList<Wierzcholek> dostepne_miasta = new ArrayList<Wierzcholek>();
         for (Wierzcholek W : drogi_osady_i_miasta) {
-                if (W.budynek == 1)
+                if (W.budynek == 1 && W.nr_gracza == numer)
                 {
                         dostepne_miasta.add(W);
                 }
@@ -157,6 +159,21 @@ public void zbuduj_miasto(Wierzcholek W){
         return;
 }
 
+public boolean czy_mozna_wymienic(int ile, String surowiec) {
+        if (surowiec == "owca") {
+                return surowce.owca >= ile;
+        } else if (surowiec == "siano") {
+                return surowce.siano >= ile;
+        } else if (surowiec == "drewno") {
+                return surowce.drewno >= ile;
+        } else if (surowiec == "cegla") {
+                return surowce.cegla >= ile;
+        } else if (surowiec == "kamien") {
+                return surowce.kamien >= ile;
+        }
+        return false;
+}
+
 public boolean czy_mozna_postawic_droge(){
         return (surowce.drewno >= 1 && surowce.cegla >= 1 && pozostale_drogi > 0);
 }
@@ -166,4 +183,45 @@ public boolean czy_mozna_postawic_osade(){
 public boolean czy_mozna_postawic_miasto(){
         return (surowce.siano >= 2 && surowce.kamien >= 3 && pozostale_miasta > 0);
 }
+public void czy_mozna_wymienic_wymien(String surowiec_do_kupienia, String surowiec_do_sprzedania) {
+        if (surowiec_do_sprzedania == "owca") {
+                if (surowce.owca >= 4) {
+                        surowce.dodaj(1, surowiec_do_kupienia);
+                        surowce.zabierz(4, surowiec_do_sprzedania);
+                }
+        } else if (surowiec_do_sprzedania == "siano") {
+                if (surowce.siano >= 4) {
+                        surowce.dodaj(1, surowiec_do_kupienia);
+                        surowce.zabierz(4, surowiec_do_sprzedania);
+                }
+        } else if (surowiec_do_sprzedania == "drewno") {
+                if (surowce.drewno >= 4) {
+                        surowce.dodaj(1, surowiec_do_kupienia);
+                        surowce.zabierz(4, surowiec_do_sprzedania);
+                }
+        } else if (surowiec_do_sprzedania == "cegla") {
+                if (surowce.cegla >= 4) {
+                        surowce.dodaj(1, surowiec_do_kupienia);
+                        surowce.zabierz(4, surowiec_do_sprzedania);
+                }
+        } else if (surowiec_do_sprzedania == "kamien") {
+                if (surowce.kamien >= 4) {
+                        surowce.dodaj(1, surowiec_do_kupienia);
+                        surowce.zabierz(4, surowiec_do_sprzedania);
+                }
+        }
+}
+public void wypisz(){
+        System.out.println(toString());
+}
+
+/**
+ * Create string representation of Gracz for printing
+ * @return
+ */
+@Override
+public String toString() {
+        return "Gracz [numer=" + numer + ", imie=" + imie + ", kolor=" + kolor + ", punkty=" + punkty + ", postawione_drogi=" + postawione_drogi + ", postawione_osady=" + postawione_osady + ", postawione_miasta=" + postawione_miasta + ", pozostale_drogi=" + pozostale_drogi + ", pozostale_osady=" + pozostale_osady + ", pozostale_miasta=" + pozostale_miasta + surowce.toString() + "]";
+}
+
 }

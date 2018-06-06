@@ -7,10 +7,10 @@ public static ArrayList<Krawedz> lista_krawedzi = new ArrayList<Krawedz>();
 public static ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcholek>();
 
 /* PRZENIOSŁEM WARTOŚCI POCZĄTKOWE Z MAPY, DZIĘKI TEMU MOŻESZ JE ZMIENIAĆ W KLASIE I NIE PATRZEĆ NAWET DO ŚRODKA FUNKCJI */
-public int X = 950;
-public int Y = 570;
+public int X = (int)Okno.size_width/3;
+public int Y = (int)Okno.size_hight/2;
 public int err = 7;
-public int length = 100;
+public int length = (int)X/6;
 
 
 /* FUNKCJE DO ZNAJDYWANIA PIERWSZYCH DWÓCH OSAD I DRÓG  -- TYLKO ONE Z POZIOMU MAPY, NASTĘPNE U GRACZA  -- Początek */
@@ -172,6 +172,13 @@ public void stworz_krawedzie_ustaw_wskazniki_na_sasiadow(){
                         ktory++;
                 }
                 od_ktorego++;
+        }
+}
+public void ustaw_zlodzieja_na_7(){
+        for (Pole P : lista_pol) {
+                if (P.wartosc == 7) {
+                        P.dodaj_zlodzieja();
+                }
         }
 }
 
@@ -337,6 +344,7 @@ public Mapa(){
         }
         stworz_krawedzie_ustaw_wskazniki_na_sasiadow();
         losuj_wartosci_i_zasoby_na_polach();
+        ustaw_zlodzieja_na_7();
 }
 }
 
@@ -348,4 +356,4 @@ public Mapa(){
     Z danego pola jest 6 możliwości osiągnięcia wierzchołka, tworzę w tym celu listę intów[7] T, gdzie T[0] == T[6].
     W polach leżących na osi P0 - wierzchołek_P0 środki pól są po prostu 3 * T[i]
     Aby osiągnąc dwa pozostałe rodzaje mam rotation_default = Math.PI/6
-    i lecę po rotation + Math.PI/3 i drugą tablicę T2[6] wektorów do znalezienia środków pól typu 1 i 2, w typie 2 przemnażam przez 2 */
+    i lecę po rotation + Math.PI/3 i drugą tablicę T2[6] wektorów do znalezienia środków pól typu 1 i 2, w typie 2 przemnażam przez 2 */

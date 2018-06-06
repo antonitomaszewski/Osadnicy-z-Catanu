@@ -21,7 +21,7 @@ public Pole(int x, int y) {
         this.y = y;
 }
 public boolean czy_to_tu(int x, int y){
-        int err = 7;
+        int err = 40;
         return ((Math.abs(this.x - x) < err) && (Math.abs(this.y - y) < err));
 }
 
