@@ -1,53 +1,53 @@
 public class Surowce {
-public int owca = 0;
-public int siano = 0;
-public int drewno = 0;
-public int cegla = 0;
-public int kamien = 0;
+    public int owca = 0;
+    public int siano = 0;
+    public int drewno = 0;
+    public int cegla = 0;
+    public int kamien = 0;
 
-public Surowce(){
-};
+    public Surowce(){
+    };
 
-public void dodaj(int ile, String surowiec) {
+    public void dodaj(int ile, String surowiec) {
         if (surowiec == "owca") {
-                this.owca += ile;
+            this.owca += ile;
         } else if (surowiec == "siano") {
-                this.siano += ile;
+            this.siano += ile;
         } else if (surowiec == "drewno") {
-                this.drewno += ile;
+            this.drewno += ile;
         } else if (surowiec == "cegla") {
-                this.cegla += ile;
+            this.cegla += ile;
         } else if (surowiec == "kamien") {
-                this.kamien += ile;
+            this.kamien += ile;
         } else {
-                System.out.println("Coś poszło nie tak przy dodawaniu surowca " + ile + " " + surowiec);
+            System.out.println("Coś poszło nie tak przy dodawaniu surowca " + ile + " " + surowiec);
         }
-}
-public void zabierz(int ile, String surowiec){
+    }
+    public void zabierz(int ile, String surowiec){
         if (surowiec == "owca") {
-                this.owca -= ile;
+            this.owca -= ile;
         } else if (surowiec == "siano") {
-                this.siano -= ile;
+            this.siano -= ile;
         } else if (surowiec == "drewno") {
-                this.drewno -= ile;
+            this.drewno -= ile;
         } else if (surowiec == "cegla") {
-                this.cegla -= ile;
+            this.cegla -= ile;
         } else if (surowiec == "kamien") {
-                this.kamien -= ile;
+            this.kamien -= ile;
         } else {
-                System.out.println("Coś poszło nie tak przy zabieraniu surowca " + ile + " " + surowiec);
+            System.out.println("Coś poszło nie tak przy zabieraniu surowca " + ile + " " + surowiec);
         }
-}
+    }
 
 
 
-/**
- * Create string representation of Surowce for printing
- * @return
- */
-@Override
-public String toString() {
+    /**
+     * Create string representation of Surowce for printing
+     * @return
+     */
+    @Override
+    public String toString() {
         return "Surowce [owca=" + owca + ", siano=" + siano + ", drewno=" + drewno + ", cegla=" + cegla + ", kamien=" + kamien + "]";
-}
+    }
 
 }
