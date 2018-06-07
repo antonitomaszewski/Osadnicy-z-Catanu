@@ -6,146 +6,148 @@ import java.util.ArrayList;
 
 public class Okno extends JFrame {
 
-    public static int size_width = 1910;
-    public static int size_hight = 1005;
+public static int size_width = 1910;
+public static int size_hight = 1005;
 
-    public static int label_gracza_width = (int)size_width/6;
+public static int label_gracza_width = (int)size_width/6;
 
-    public static ArrayList<LabelGracza> lista_labeli_graczy = new ArrayList<LabelGracza>();
+public static ArrayList<LabelGracza> lista_labeli_graczy = new ArrayList<LabelGracza>();
 
 // public JLabel label_gracza;
 // public JLabel label_gracza2;
 // public JLabel label_gracza3;
 // public JLabel label_gracza4;
 
-    public static JButton button_los = new JButton("RZUĆ KOŚĆMI");
-    public static JButton button_koniec_tury = new JButton("KONIEC TURY");
-    public static JButton button_buduj_droge = new JButton("BUDUJ DROGĘ");
-    public static JButton button_buduj_osade = new JButton("BUDUJ OSADĘ");
-    public static JButton button_buduj_miasto = new JButton("BUDUJ MIASTO");
-    public static JButton button_wymiana = new JButton("WYMIEŃ Z BANKIEM");
-    public static JButton button_wymiana_z_graczem = new JButton("WYMIEŃ Z GRACZEM");
+public static JButton button_los = new JButton("RZUĆ KOŚĆMI");
+public static JButton button_koniec_tury = new JButton("KONIEC TURY");
+public static JButton button_buduj_droge = new JButton("BUDUJ DROGĘ");
+public static JButton button_buduj_osade = new JButton("BUDUJ OSADĘ");
+public static JButton button_buduj_miasto = new JButton("BUDUJ MIASTO");
+public static JButton button_wymiana = new JButton("WYMIEŃ Z BANKIEM");
+public static JButton button_wymiana_z_graczem = new JButton("WYMIEŃ Z GRACZEM");
 
 
 
 
 
 
-    // public static JPanel panel_gracza2 = new JPanel();
-    public static PanelMapa label_mapa = new PanelMapa();
+// public static JPanel panel_gracza2 = new JPanel();
+public static PanelMapa label_mapa = new PanelMapa();
 // public JTextArea siema = new JTextArea("Witam");
 // public static JTextArea siema2 = new JTextArea("Witam2");
 
-    public ActionListener action_los = new ActionListener() {
+public ActionListener action_los = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (Gra.czy_mozna_losowac) {
-                Gra.wylosowano = true;
-                Gra.czy_mozna_losowac = false;
-                // Gra.wylosuj_i_rozdaj_surowce();
-                // button_los.setText(Integer.toString(Gra.kostka_pierwsza) + "  " + Integer.toString(Gra.kostka_druga));
-            }
+                if (Gra.czy_mozna_losowac) {
+                        Gra.wylosowano = true;
+                        Gra.czy_mozna_losowac = false;
+                        // Gra.wylosuj_i_rozdaj_surowce();
+                        // button_los.setText(Integer.toString(Gra.kostka_pierwsza) + "  " + Integer.toString(Gra.kostka_druga));
+                }
         }
-    };
-    public ActionListener action_koniec = new ActionListener() {
+};
+public ActionListener action_koniec = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (Gra.czas_akcji_gracza) {
-                Gra.budujemy_droge = false;
-                Gra.budujemy_miasto = false;
-                Gra.budujemy_osade = false;
-                Gra.koniec_kolejki = true;
-                Gra.wymiana = false;
-                Gra.wylosowano = false;
-                Gra.wybrano_wspolrzedne = false;
-                button_los.setText("RZUĆ KOŚĆMI");
-                repaint();
-            }
+                if (Gra.czas_akcji_gracza) {
+                        Gra.budujemy_droge = false;
+                        Gra.budujemy_miasto = false;
+                        Gra.budujemy_osade = false;
+                        Gra.koniec_kolejki = true;
+                        Gra.wymiana = false;
+                        Gra.wylosowano = false;
+                        Gra.wybrano_wspolrzedne = false;
+                        button_los.setText("RZUĆ KOŚĆMI");
+                        repaint();
+                }
         }
-    };
-    public ActionListener action_droga = new ActionListener() {
+};
+public ActionListener action_droga = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (Gra.czas_akcji_gracza) {
-                // Gra.budujemy_droge = !Gra.budujemy_droge;
-                Gra.budujemy_droge = true;
-                Gra.budujemy_osade = false;
-                Gra.budujemy_miasto = false;
-                Gra.wymiana = false;
-                repaint();
-            }
+                if (Gra.czas_akcji_gracza) {
+                        // Gra.budujemy_droge = !Gra.budujemy_droge;
+                        Gra.budujemy_droge = true;
+                        Gra.budujemy_osade = false;
+                        Gra.budujemy_miasto = false;
+                        Gra.wymiana = false;
+                        repaint();
+                }
         }
-    };
-    public ActionListener action_osada = new ActionListener() {
+};
+public ActionListener action_osada = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (Gra.czas_akcji_gracza) {
-                Gra.budujemy_droge = false;
-                // Gra.budujemy_osade = !Gra.budujemy_osade;
-                Gra.budujemy_osade = true;
-                Gra.budujemy_miasto = false;
-                Gra.wymiana = false;
-                repaint();
-            }
+                if (Gra.czas_akcji_gracza) {
+                        Gra.budujemy_droge = false;
+                        // Gra.budujemy_osade = !Gra.budujemy_osade;
+                        Gra.budujemy_osade = true;
+                        Gra.budujemy_miasto = false;
+                        Gra.wymiana = false;
+                        repaint();
+                }
         }
-    };
-    public ActionListener action_miasto = new ActionListener() {
+};
+public ActionListener action_miasto = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (Gra.czas_akcji_gracza) {
-                Gra.budujemy_droge = false;
-                Gra.budujemy_osade = false;
-                // Gra.budujemy_miasto = !Gra.budujemy_miasto;
-                Gra.budujemy_miasto = true;
-                Gra.wymiana = false;
-                repaint();
-            }
+                if (Gra.czas_akcji_gracza) {
+                        Gra.budujemy_droge = false;
+                        Gra.budujemy_osade = false;
+                        // Gra.budujemy_miasto = !Gra.budujemy_miasto;
+                        Gra.budujemy_miasto = true;
+                        Gra.wymiana = false;
+                        repaint();
+                }
         }
-    };
-    public ActionListener action_wymiana = new ActionListener() {
+};
+public ActionListener action_wymiana = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (Gra.czas_akcji_gracza) {
-                // new Wymiana();
+                if (Gra.czas_akcji_gracza) {
+                        // new Wymiana();
 
-                Gra.budujemy_droge = false;
-                Gra.budujemy_osade = false;
-                Gra.budujemy_miasto = false;
-                Gra.wymiana = true;
-                Gra.wymiana_z_graczem = false;
-            }
+                        Gra.budujemy_droge = false;
+                        Gra.budujemy_osade = false;
+                        Gra.budujemy_miasto = false;
+                        Gra.wymiana = true;
+                        Gra.wymiana_z_graczem = false;
+                        repaint();
+                }
         }
-    };
+};
 
-    public ActionListener action_wymiana_z_graczem = new ActionListener() {
+public ActionListener action_wymiana_z_graczem = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (Gra.czas_akcji_gracza) {
-                // new Wymiana();
+                if (Gra.czas_akcji_gracza) {
+                        // new Wymiana();
 
-                Gra.budujemy_droge = false;
-                Gra.budujemy_osade = false;
-                Gra.budujemy_miasto = false;
-                Gra.wymiana = false;
-                Gra.wymiana_z_graczem = true;
-            }
+                        Gra.budujemy_droge = false;
+                        Gra.budujemy_osade = false;
+                        Gra.budujemy_miasto = false;
+                        Gra.wymiana = false;
+                        Gra.wymiana_z_graczem = true;
+                        repaint();
+                }
         }
-    };
-    private MouseListener mouse_listener = new MouseAdapter()
-    {
+};
+private MouseListener mouse_listener = new MouseAdapter()
+{
 
         @Override
         public void mouseClicked(MouseEvent ev)
         {
-            if (Gra.czas_pobierania_wspolrzednych) {
-                Gra.x = ev.getX();
-                Gra.y = ev.getY();
-                Gra.wybrano_wspolrzedne = true;
-                repaint();
-            }
+                if (Gra.czas_pobierania_wspolrzednych) {
+                        Gra.x = ev.getX();
+                        Gra.y = ev.getY();
+                        Gra.wybrano_wspolrzedne = true;
+                        repaint();
+                }
         }
 
-    };
+};
 
 
 
@@ -166,7 +168,7 @@ public class Okno extends JFrame {
 
 
 
-    public Okno() {
+public Okno() {
         super("OSADNICY Z CATANU FULL VERSION INFINITY QUAD HD 4K BETA");
         setLayout(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -417,10 +419,10 @@ public class Okno extends JFrame {
 
 
         for(int i=0; i<Gra.liczba_graczy; i++) {
-            LabelGracza l = new LabelGracza(Gra.lista_graczy.get(i), i+1);
-            l.setOpaque(true);
-            l.setBackground(new Color(249, 249, 249));
-            lista_labeli_graczy.add(l);
+                LabelGracza l = new LabelGracza(Gra.lista_graczy.get(i), i+1);
+                l.setOpaque(true);
+                l.setBackground(new Color(249, 249, 249));
+                lista_labeli_graczy.add(l);
         }
 
         lista_labeli_graczy.get(0).setOpaque(true);
@@ -435,15 +437,15 @@ public class Okno extends JFrame {
 
 
         if(lista_labeli_graczy.size()>2) {
-            lista_labeli_graczy.get(2).setOpaque(true);
-            lista_labeli_graczy.get(2).setBounds(size_width - label_gracza_width, 0, label_gracza_width, (int)size_hight/2);
-            add(lista_labeli_graczy.get(2));
+                lista_labeli_graczy.get(2).setOpaque(true);
+                lista_labeli_graczy.get(2).setBounds(size_width - label_gracza_width, 0, label_gracza_width, (int)size_hight/2);
+                add(lista_labeli_graczy.get(2));
         }
 
         if(lista_labeli_graczy.size()>3) {
-            lista_labeli_graczy.get(3).setOpaque(true);
-            lista_labeli_graczy.get(3).setBounds(size_width - label_gracza_width, (int)size_hight/2, label_gracza_width, (int)size_hight/2);
-            add(lista_labeli_graczy.get(3));
+                lista_labeli_graczy.get(3).setOpaque(true);
+                lista_labeli_graczy.get(3).setBounds(size_width - label_gracza_width, (int)size_hight/2, label_gracza_width, (int)size_hight/2);
+                add(lista_labeli_graczy.get(3));
         }
 
 
@@ -488,5 +490,5 @@ public class Okno extends JFrame {
         setVisible(true);
         repaint();
 
-    }
+}
 }

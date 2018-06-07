@@ -8,14 +8,14 @@ import javax.swing.*;
 public class PanelMapa extends JLabel {
 
 
-    public static String s = new String();
+public static String s = new String();
 // public static String d = new String();
 
-    public PanelMapa() {
+public PanelMapa() {
 
-    }
+}
 
-    protected void paintComponent(Graphics g) {
+protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.BLACK);
@@ -25,11 +25,19 @@ public class PanelMapa extends JLabel {
         s = "Runda ";
         s = s + Integer.toString(Gra.runda) + "    Gracz " + Gra.lista_graczy.get(Gra.kolejka).imie;
         if(Gra.czy_mozna_losowac)
-            s += "   Rzuć kośćmi";
+                s += "   Rzuć kośćmi";
         if (Gra.ustaw_zlodzieja)
-            s += "   Ustaw złodzieja";
-        if (Gra.koniec_gry)
-            s = "Koniec Gry, LESZCZU PRZEGRAŁ";
+                s += "   Ustaw złodzieja";
+        if (Gra.koniec_gry) {
+                s = "Koniec Gry.   Wygrana: ";
+                for (Gracz G : Gra.lista_graczy)
+                        if (G.punkty >= 10) {
+                                s += G.imie;
+                                s += ", ";
+                        }
+                s = s.substring(0, s.length() - 2);
+
+        }
         // if (Gra.czas_pobierania_wspolrzednych)
         //         s += "   Wybierz współrzędne";
         // if (Gra.czas_akcji_gracza)
@@ -49,58 +57,58 @@ public class PanelMapa extends JLabel {
         //     g2d.fill(szesciakat);
         // }
         for(Pole p : Mapa.lista_pol) {
-            Polygon szesciakat = new Polygon();
-            for(Wierzcholek w : p.lista_wierzcholkow) {
-                szesciakat.addPoint(w.x, w.y);
-            }
-            g2d.setColor(p.kolor);
-            g2d.fill(szesciakat);
-            if(p.zlodziej) {
-                g2d.setColor(Color.WHITE);
-                int c = (int)Okno.size_width/36;
-                g2d.setStroke(new BasicStroke(10));
-                g2d.drawLine(p.x - c, p.y - c, p.x + c, p.y + c);
-                g2d.drawLine(p.x - c, p.y + c, p.x + c, p.y - c);
-                g2d.setColor(Color.RED);
-                g2d.setStroke(new BasicStroke(5));
-                g2d.drawLine(p.x - c, p.y - c, p.x + c, p.y + c);
-                g2d.drawLine(p.x - c, p.y + c, p.x + c, p.y - c);
+                Polygon szesciakat = new Polygon();
+                for(Wierzcholek w : p.lista_wierzcholkow) {
+                        szesciakat.addPoint(w.x, w.y);
+                }
+                g2d.setColor(p.kolor);
+                g2d.fill(szesciakat);
+                if(p.zlodziej) {
+                        g2d.setColor(Color.WHITE);
+                        int c = (int)Okno.size_width/36;
+                        g2d.setStroke(new BasicStroke(10));
+                        g2d.drawLine(p.x - c, p.y - c, p.x + c, p.y + c);
+                        g2d.drawLine(p.x - c, p.y + c, p.x + c, p.y - c);
+                        g2d.setColor(Color.RED);
+                        g2d.setStroke(new BasicStroke(5));
+                        g2d.drawLine(p.x - c, p.y - c, p.x + c, p.y + c);
+                        g2d.drawLine(p.x - c, p.y + c, p.x + c, p.y - c);
 
-            }
+                }
         }
 
 
         //rysujemy wszystkie liczby
         for(Pole p : Mapa.lista_pol) {
-            g2d.setColor(Color.BLACK);
-            g2d.setFont(new Font("ArialBlack", Font.PLAIN, 40));
-            int x_pom = p.x - metrics.stringWidth(Integer.toString(p.wartosc))/2;
-            int y_pom = p.y - metrics.getHeight()/2 + metrics.getAscent();
-            g2d.drawString(Integer.toString(p.wartosc), x_pom, y_pom);
+                g2d.setColor(Color.BLACK);
+                g2d.setFont(new Font("ArialBlack", Font.PLAIN, 40));
+                int x_pom = p.x - metrics.stringWidth(Integer.toString(p.wartosc))/2;
+                int y_pom = p.y - metrics.getHeight()/2 + metrics.getAscent();
+                g2d.drawString(Integer.toString(p.wartosc), x_pom, y_pom);
         }
 
         //rysujemy wszystkie drogi
         g2d.setColor(Color.WHITE);
         g2d.setStroke(new BasicStroke(10));
         for(Krawedz k : Mapa.lista_krawedzi) {
-            g2d.drawLine(k.x1, k.y1, k.x2, k.y2);
+                g2d.drawLine(k.x1, k.y1, k.x2, k.y2);
         }
 
         //rysujemy zajete drogi
         g2d.setStroke(new BasicStroke(5));
         for(Krawedz k : Mapa.lista_krawedzi) {
-            if(!k.is_empty) {
-                g2d.setColor(k.kolor_gracza);
-                g2d.drawLine(k.x1, k.y1, k.x2, k.y2);
-            }
+                if(!k.is_empty) {
+                        g2d.setColor(k.kolor_gracza);
+                        g2d.drawLine(k.x1, k.y1, k.x2, k.y2);
+                }
         }
 
         //rysujemy możliwe drogi
         if(Gra.budujemy_droge) {
-            for(Krawedz k : Gra.dostepne_drogi) {
-                g2d.setColor(new Color(218, 218, 218));
-                g2d.drawLine(k.x1, k.y1, k.x2, k.y2);
-            }
+                for(Krawedz k : Gra.dostepne_drogi) {
+                        g2d.setColor(new Color(218, 218, 218));
+                        g2d.drawLine(k.x1, k.y1, k.x2, k.y2);
+                }
         }
 
         int length = (int)Okno.size_width/18;
@@ -113,75 +121,75 @@ public class PanelMapa extends JLabel {
 
         //rysujemy osady
         for(Wierzcholek w : Mapa.lista_wierzcholkow) {
-            if(!w.is_empty && w.budynek == 1) {
-                g2d.setColor(w.kolor_gracza);
-                Polygon osada = new Polygon();
-                osada.addPoint(w.x - s30, w.y + s20);
-                osada.addPoint(w.x - s30, w.y - s20);
-                osada.addPoint(w.x, w.y - s40);
-                osada.addPoint(w.x + s30, w.y - s20);
-                osada.addPoint(w.x + s30, w.y + s20);
-                g2d.fill(osada);
-                g2d.setColor(Color.WHITE);
-                g2d.setStroke(new BasicStroke(3));
-                g2d.draw(osada);
-            }
+                if(!w.is_empty && w.budynek == 1) {
+                        g2d.setColor(w.kolor_gracza);
+                        Polygon osada = new Polygon();
+                        osada.addPoint(w.x - s30, w.y + s20);
+                        osada.addPoint(w.x - s30, w.y - s20);
+                        osada.addPoint(w.x, w.y - s40);
+                        osada.addPoint(w.x + s30, w.y - s20);
+                        osada.addPoint(w.x + s30, w.y + s20);
+                        g2d.fill(osada);
+                        g2d.setColor(Color.WHITE);
+                        g2d.setStroke(new BasicStroke(3));
+                        g2d.draw(osada);
+                }
         }
 
         //rysujemy miasta
         for(Wierzcholek w : Mapa.lista_wierzcholkow) {
-            if(!w.is_empty && w.budynek == 2) {
-                g2d.setColor(w.kolor_gracza);
-                Polygon miasto = new Polygon();
-                miasto.addPoint(w.x - s40, w.y + s30);
-                miasto.addPoint(w.x - s40, w.y - s20);
-                miasto.addPoint(w.x - s20, w.y - s40);
-                miasto.addPoint(w.x + s3, w.y - s20);
-                miasto.addPoint(w.x + s3, w.y - s5);
-                miasto.addPoint(w.x + s30, w.y - s5);
-                miasto.addPoint(w.x + s30, w.y + s30);
-                g2d.fill(miasto);
-                g2d.setColor(Color.WHITE);
-                g2d.setStroke(new BasicStroke(3));
-                g2d.draw(miasto);
-            }
+                if(!w.is_empty && w.budynek == 2) {
+                        g2d.setColor(w.kolor_gracza);
+                        Polygon miasto = new Polygon();
+                        miasto.addPoint(w.x - s40, w.y + s30);
+                        miasto.addPoint(w.x - s40, w.y - s20);
+                        miasto.addPoint(w.x - s20, w.y - s40);
+                        miasto.addPoint(w.x + s3, w.y - s20);
+                        miasto.addPoint(w.x + s3, w.y - s5);
+                        miasto.addPoint(w.x + s30, w.y - s5);
+                        miasto.addPoint(w.x + s30, w.y + s30);
+                        g2d.fill(miasto);
+                        g2d.setColor(Color.WHITE);
+                        g2d.setStroke(new BasicStroke(3));
+                        g2d.draw(miasto);
+                }
         }
 
         //rysujemy możliwe osady
         if(Gra.budujemy_osade) {
-            for(Wierzcholek w : Gra.dostepne_osady) {
-                g2d.setColor(new Color(218, 218, 218));
-                Polygon osada = new Polygon();
-                osada.addPoint(w.x - s30, w.y + s20);
-                osada.addPoint(w.x - s30, w.y - s20);
-                osada.addPoint(w.x, w.y - s40);
-                osada.addPoint(w.x + s30, w.y - s20);
-                osada.addPoint(w.x + s30, w.y + s20);
-                g2d.fill(osada);
-                g2d.setColor(Color.WHITE);
-                g2d.setStroke(new BasicStroke(3));
-                g2d.draw(osada);
-            }
+                for(Wierzcholek w : Gra.dostepne_osady) {
+                        g2d.setColor(new Color(218, 218, 218));
+                        Polygon osada = new Polygon();
+                        osada.addPoint(w.x - s30, w.y + s20);
+                        osada.addPoint(w.x - s30, w.y - s20);
+                        osada.addPoint(w.x, w.y - s40);
+                        osada.addPoint(w.x + s30, w.y - s20);
+                        osada.addPoint(w.x + s30, w.y + s20);
+                        g2d.fill(osada);
+                        g2d.setColor(Color.WHITE);
+                        g2d.setStroke(new BasicStroke(3));
+                        g2d.draw(osada);
+                }
         }
 
         //rysujemy możliwe miasta
         if(Gra.budujemy_miasto) {
-            for(Wierzcholek w : Gra.dostepne_miasta) {
-                g2d.setColor(new Color(218, 218, 218));
-                Polygon miasto = new Polygon();
-                miasto.addPoint(w.x - s40, w.y + s30);
-                miasto.addPoint(w.x - s40, w.y - s20);
-                miasto.addPoint(w.x - s20, w.y - s40);
-                miasto.addPoint(w.x + s3, w.y - s20);
-                miasto.addPoint(w.x + s3, w.y - s5);
-                miasto.addPoint(w.x + s30, w.y - s5);
-                miasto.addPoint(w.x + s30, w.y + s30);
-                g2d.fill(miasto);
-                g2d.setColor(Color.WHITE);
-                g2d.setStroke(new BasicStroke(3));
-                g2d.draw(miasto);
+                for(Wierzcholek w : Gra.dostepne_miasta) {
+                        g2d.setColor(new Color(218, 218, 218));
+                        Polygon miasto = new Polygon();
+                        miasto.addPoint(w.x - s40, w.y + s30);
+                        miasto.addPoint(w.x - s40, w.y - s20);
+                        miasto.addPoint(w.x - s20, w.y - s40);
+                        miasto.addPoint(w.x + s3, w.y - s20);
+                        miasto.addPoint(w.x + s3, w.y - s5);
+                        miasto.addPoint(w.x + s30, w.y - s5);
+                        miasto.addPoint(w.x + s30, w.y + s30);
+                        g2d.fill(miasto);
+                        g2d.setColor(Color.WHITE);
+                        g2d.setStroke(new BasicStroke(3));
+                        g2d.draw(miasto);
 
-            }
+                }
         }
 
         //CENNIK NA DOLE
@@ -278,5 +286,5 @@ public class PanelMapa extends JLabel {
 
 
 
-    }
+}
 }
