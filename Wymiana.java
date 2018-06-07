@@ -5,91 +5,91 @@ import java.awt.event.*;
 public class Wymiana extends JFrame {
 
 
-    public JLabel label_caly_obaszar;
-    public JPanel panel_kup = new JPanel();
-    public JPanel panel_sprzedaj = new JPanel();
-    public int Wymiana_width = 700;
-    public int Wymiana_high = 400;
+public JLabel label_caly_obaszar;
+public JPanel panel_kup = new JPanel();
+public JPanel panel_sprzedaj = new JPanel();
+public int Wymiana_width = 700;
+public int Wymiana_high = 400;
 
-    public static JCheckBox kup_owca = new JCheckBox("Owca");
-    public static JCheckBox kup_siano = new JCheckBox("Siano");
-    public static JCheckBox kup_drewno = new JCheckBox("Drewno");
-    public static JCheckBox kup_cegla = new JCheckBox("Cegła");
-    public static JCheckBox kup_kamien = new JCheckBox("Kamien");
+public static JCheckBox kup_owca = new JCheckBox("Owca");
+public static JCheckBox kup_siano = new JCheckBox("Siano");
+public static JCheckBox kup_drewno = new JCheckBox("Drewno");
+public static JCheckBox kup_cegla = new JCheckBox("Cegła");
+public static JCheckBox kup_kamien = new JCheckBox("Kamien");
 
 
-    public static JCheckBox sprzedaj_owca = new JCheckBox("Owca");
-    public static JCheckBox sprzedaj_siano = new JCheckBox("Siano");
-    public static JCheckBox sprzedaj_drewno = new JCheckBox("Drewno");
-    public static JCheckBox sprzedaj_cegla = new JCheckBox("Cegła");
-    public static JCheckBox sprzedaj_kamien = new JCheckBox("Kamien");
+public static JCheckBox sprzedaj_owca = new JCheckBox("Owca");
+public static JCheckBox sprzedaj_siano = new JCheckBox("Siano");
+public static JCheckBox sprzedaj_drewno = new JCheckBox("Drewno");
+public static JCheckBox sprzedaj_cegla = new JCheckBox("Cegła");
+public static JCheckBox sprzedaj_kamien = new JCheckBox("Kamien");
 
-    public static JButton button_potwierdz_transakcje = new JButton("Potwierdz transakcję");
+public static JButton button_potwierdz_transakcje = new JButton("Potwierdz transakcję");
 
-    public ActionListener action_potwierdz_transakcje = new ActionListener() {
+public ActionListener action_potwierdz_transakcje = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (Gra.czas_akcji_gracza) {
-                String kup = "";
-                int licznik = 0;
-                if(kup_owca.isSelected()) {
-                    licznik++;
-                    kup = "owca";
-                }
-                if(kup_siano.isSelected()) {
-                    licznik++;
-                    kup = "siano";
-                }
-                if(kup_drewno.isSelected()) {
-                    licznik++;
-                    kup = "drewno";
-                }
-                if(kup_cegla.isSelected()) {
-                    licznik++;
-                    kup = "cegla";
-                }
-                if(kup_kamien.isSelected()) {
-                    licznik++;
-                    kup = "kamien";
-                }
+                if (Gra.czas_akcji_gracza) {
+                        String kup = "";
+                        int licznik = 0;
+                        if(kup_owca.isSelected()) {
+                                licznik++;
+                                kup = "owca";
+                        }
+                        if(kup_siano.isSelected()) {
+                                licznik++;
+                                kup = "siano";
+                        }
+                        if(kup_drewno.isSelected()) {
+                                licznik++;
+                                kup = "drewno";
+                        }
+                        if(kup_cegla.isSelected()) {
+                                licznik++;
+                                kup = "cegla";
+                        }
+                        if(kup_kamien.isSelected()) {
+                                licznik++;
+                                kup = "kamien";
+                        }
 
-                String sprzedaj = "";
-                int licznik_sprzedaj = 0;
-                if(sprzedaj_owca.isSelected()) {
-                    licznik_sprzedaj++;
-                    sprzedaj = "owca";
-                }
-                if(sprzedaj_siano.isSelected()) {
-                    licznik_sprzedaj++;
-                    sprzedaj = "siano";
-                }
-                if(sprzedaj_drewno.isSelected()) {
-                    licznik_sprzedaj++;
-                    sprzedaj = "drewno";
-                }
-                if(sprzedaj_cegla.isSelected()) {
-                    licznik_sprzedaj++;
-                    sprzedaj = "cegla";
-                }
-                if(sprzedaj_kamien.isSelected()) {
-                    licznik_sprzedaj++;
-                    sprzedaj = "kamien";
-                }
+                        String sprzedaj = "";
+                        int licznik_sprzedaj = 0;
+                        if(sprzedaj_owca.isSelected()) {
+                                licznik_sprzedaj++;
+                                sprzedaj = "owca";
+                        }
+                        if(sprzedaj_siano.isSelected()) {
+                                licznik_sprzedaj++;
+                                sprzedaj = "siano";
+                        }
+                        if(sprzedaj_drewno.isSelected()) {
+                                licznik_sprzedaj++;
+                                sprzedaj = "drewno";
+                        }
+                        if(sprzedaj_cegla.isSelected()) {
+                                licznik_sprzedaj++;
+                                sprzedaj = "cegla";
+                        }
+                        if(sprzedaj_kamien.isSelected()) {
+                                licznik_sprzedaj++;
+                                sprzedaj = "kamien";
+                        }
 
-                if (licznik == 1 && licznik_sprzedaj == 1) {
-                    Gra.lista_graczy.get(Gra.kolejka).czy_mozna_wymienic_wymien(kup, sprzedaj);
-                    Gra.ustaw_poczatkowe_listy_dostepnych_drog_osad_i_miast();
-                    System.out.println("Udało się wymienić");
+                        if (licznik == 1 && licznik_sprzedaj == 1) {
+                                Gra.lista_graczy.get(Gra.kolejka).czy_mozna_wymienic_wymien(kup, sprzedaj);
+                                Gra.ustaw_poczatkowe_listy_dostepnych_drog_osad_i_miast();
+                                System.out.println("Udało się wymienić");
+                        }
+                        else
+                                System.out.println("NIE Udało się wymienić");
+                        Gra.potwierdzono_transakcje_i_zamknieto = true;
                 }
-                else
-                    System.out.println("NIE Udało się wymienić");
-                Gra.potwierdzono_transakcje_i_zamknieto = true;
-            }
 
         }
-    };
+};
 
-    public Wymiana(){
+public Wymiana(){
 
         super("Wymiana z Bankiem");
         setSize(Wymiana_width, Wymiana_high);
@@ -99,20 +99,20 @@ public class Wymiana extends JFrame {
 
 
         label_caly_obaszar = new JLabel(){
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.setFont(new Font("ArialBlack", Font.PLAIN, 30));
-                FontMetrics metrics = g.getFontMetrics(g2d.getFont());
-                int xs = (Wymiana_width - metrics.stringWidth("Wybierz surowiec do kupienia"))/2;
-                g2d.drawString("Wybierz surowiec do kupienia", xs, 30);
+                protected void paintComponent(Graphics g) {
+                        super.paintComponent(g);
+                        Graphics2D g2d = (Graphics2D) g;
+                        g2d.setFont(new Font("ArialBlack", Font.PLAIN, 30));
+                        FontMetrics metrics = g.getFontMetrics(g2d.getFont());
+                        int xs = (Wymiana_width - metrics.stringWidth("Wybierz surowiec do kupienia"))/2;
+                        g2d.drawString("Wybierz surowiec do kupienia", xs, 30);
 
-                xs = (Wymiana_width - metrics.stringWidth("Wybierz surowiec do sprzedania"))/2;
-                g2d.drawString("Wybierz surowiec do sprzedania", xs, 140);
+                        xs = (Wymiana_width - metrics.stringWidth("Wybierz surowiec do sprzedania"))/2;
+                        g2d.drawString("Wybierz surowiec do sprzedania", xs, 140);
 
-                revalidate();
-                repaint();
-            }
+                        revalidate();
+                        repaint();
+                }
         };
 
 
@@ -165,5 +165,5 @@ public class Wymiana extends JFrame {
         setVisible(true);
         revalidate();
         repaint();
-    }
+}
 }
