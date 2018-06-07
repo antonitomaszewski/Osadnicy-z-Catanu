@@ -3,29 +3,31 @@ import java.util.ArrayList;
 
 public class Wierzcholek {
 
-    public int x;
-    public int y;
+public int x;
+public int y;
 
-    public boolean is_empty = true;
+public boolean is_empty = true;
 
-    public int nr_gracza = -1;
-    public String nazwa_gracza = "";
-    public Color kolor_gracza = Color.WHITE;
+public int nr_gracza = -1;
+public String nazwa_gracza = "";
+public Color kolor_gracza = Color.WHITE;
 
-    public int budynek = -1;
+public int budynek = -1;
 
-    public Wierzcholek(int x, int y) {
+int err = (int) Okno.size_hight / 36;
+
+public Wierzcholek(int x, int y) {
         this.x = x;
         this.y = y;
-    };
+};
 
-    /* NOWE ZMIANY */
-    public ArrayList<Wierzcholek> sasiednie_wierzcholki = new ArrayList<Wierzcholek>();
-    public ArrayList<Krawedz> sasiednie_krawedzie = new ArrayList<Krawedz>();
+/* NOWE ZMIANY */
+public ArrayList<Wierzcholek> sasiednie_wierzcholki = new ArrayList<Wierzcholek>();
+public ArrayList<Krawedz> sasiednie_krawedzie = new ArrayList<Krawedz>();
 
 
 
-    public void zbuduj_osade(int gracz, String imie, Color kolor) {
+public void zbuduj_osade(int gracz, String imie, Color kolor) {
         this.is_empty = false;
 
         this.nr_gracza = gracz;
@@ -34,16 +36,15 @@ public class Wierzcholek {
 
         this.budynek = 1;
         return;
-    }
-    public void zbuduj_miasto() {
+}
+public void zbuduj_miasto() {
         this.budynek = 2;
         return;
-    }
+}
 
-    public boolean czy_to_tu(int x, int y){
-        int err = 15;
+public boolean czy_to_tu(int x, int y){
         return ((Math.abs(this.x - x) < err) && (Math.abs(this.y - y) < err));
-    }
+}
 
 
 
@@ -52,20 +53,20 @@ public class Wierzcholek {
 
 
 
-    public void wypisz() {
+public void wypisz() {
         for (Wierzcholek W :  sasiednie_wierzcholki) {
-            System.out.println(W.toString());
+                System.out.println(W.toString());
         }
         System.out.println(this.toString());
         return;
-    }
-    /**
-     * Create string representation of Wierzcholek for printing
-     * @return
-     */
-    @Override
-    public String toString() {
+}
+/**
+ * Create string representation of Wierzcholek for printing
+ * @return
+ */
+@Override
+public String toString() {
         return "Wierzcholek [x=" + x + ", y=" + y + ", is_empty=" + is_empty + ", nr_gracza=" + nr_gracza + ", nazwa_gracza=" + nazwa_gracza + ", kolor_gracza=" + kolor_gracza + ", budynek=" + budynek + "]";
-    }
+}
 
 }

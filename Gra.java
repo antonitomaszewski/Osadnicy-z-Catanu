@@ -174,7 +174,7 @@ public Gra(String[] imiona, Color[] kolory){
         defaultowo();
         // lista_graczy.get(0).punkty = 10;
         pierwsza_runda_rozdaj_surowce();
-//         wylosuj_przez_i_kolejek_surowce(200);
+        // wylosuj_przez_i_kolejek_surowce(200);
 //         lista_graczy.get(0).punkty = 10;
         Wymiana_z_Graczem = new Wymiana_z_Graczem();
         Wymiana = new Wymiana();
