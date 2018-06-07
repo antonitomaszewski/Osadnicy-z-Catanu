@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Okno extends JFrame {
 
-public static int size_width = 1910;
-public static int size_hight = 1005;
+public static int size_width = 1920;
+public static int size_hight = 1021;
 
 public static int label_gracza_width = (int)size_width/6;
 
