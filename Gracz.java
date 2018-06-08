@@ -120,42 +120,49 @@ public void zabierz(int ile, String surowiec){
 
 
 public void zbuduj_droge(Krawedz K){
-        K.zbuduj_droge(numer, imie, kolor);
-        if (!czy_wierzcholek_juz_jest(K.wierzcholek_tworzacy_1)) {
-                drogi_osady_i_miasta.add(K.wierzcholek_tworzacy_1);
-        } else if (!czy_wierzcholek_juz_jest(K.wierzcholek_tworzacy_2)) {
-                drogi_osady_i_miasta.add(K.wierzcholek_tworzacy_2);
+        if (czy_mozna_postawic_droge()) {
+                K.zbuduj_droge(numer, imie, kolor);
+                if (!czy_wierzcholek_juz_jest(K.wierzcholek_tworzacy_1)) {
+                        drogi_osady_i_miasta.add(K.wierzcholek_tworzacy_1);
+                } else if (!czy_wierzcholek_juz_jest(K.wierzcholek_tworzacy_2)) {
+                        drogi_osady_i_miasta.add(K.wierzcholek_tworzacy_2);
+                }
+                this.zabierz(1, "drewno");
+                this.zabierz(1, "cegla");
+                postawione_drogi++;
+                pozostale_drogi--;
         }
-        this.zabierz(1, "drewno");
-        this.zabierz(1, "cegla");
-        postawione_drogi++;
-        pozostale_drogi--;
         return;
 }
 public void zbuduj_osade(Wierzcholek W){
-        W.zbuduj_osade(this.numer, this.imie, this.kolor);
+        if (czy_mozna_postawic_osade()) {
 
-        this.zabierz(1, "owca");
-        this.zabierz(1, "siano");
-        this.zabierz(1, "drewno");
-        this.zabierz(1, "cegla");
-        punkty++;
-        postawione_osady++;
-        pozostale_osady--;
+                W.zbuduj_osade(this.numer, this.imie, this.kolor);
+
+                this.zabierz(1, "owca");
+                this.zabierz(1, "siano");
+                this.zabierz(1, "drewno");
+                this.zabierz(1, "cegla");
+                punkty++;
+                postawione_osady++;
+                pozostale_osady--;
+        }
         return;
 }
 public void zbuduj_miasto(Wierzcholek W){
-        W.zbuduj_miasto();
+        if (czy_mozna_postawic_miasto()) {
+                W.zbuduj_miasto();
 
-        this.zabierz(2, "siano");
-        this.zabierz(3, "kamien");
+                this.zabierz(2, "siano");
+                this.zabierz(3, "kamien");
 
-        punkty++;
-        postawione_miasta++;
-        pozostale_miasta--;
+                punkty++;
+                postawione_miasta++;
+                pozostale_miasta--;
 
-        postawione_osady--;
-        pozostale_osady++;
+                postawione_osady--;
+                pozostale_osady++;
+        }
         return;
 }
 

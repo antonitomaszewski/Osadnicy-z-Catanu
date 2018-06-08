@@ -50,6 +50,36 @@ public ArrayList<Krawedz> dostepne_lokalizacje_pierwszej_lub_drugiej_drogi(Gracz
 
 /* STWÓRZ MAPĘ */
 /* DZIAŁA  -- Wyniki 19 Pól, 54 Wierzchołki, 72 krawędzie są dobre */
+public void wyprostuj_krawedzie() {
+        for (Krawedz K : lista_krawedzi) {
+                if (Math.abs(K.x1 - K.x2) < 10) {
+                        if (K.x1 > K.x2) {
+                                K.wierzcholek_tworzacy_1.x = K.x2;
+                                K.x1 = K.x2;
+                                for (Krawedz K1 : K.wierzcholek_tworzacy_1.sasiednie_krawedzie) {
+                                        if (Math.abs(K1.x1 - K.x2) < err) {
+                                                K.x1 = K.x2;
+                                        } else {
+                                                K.x2 = K.x2;
+                                        }
+                                }
+                        } if (K.x2 > K.x1) {
+                                K.wierzcholek_tworzacy_2.x = K.x1;
+                                K.x2 = K.x1;
+                                for (Krawedz K1 : K.wierzcholek_tworzacy_1.sasiednie_krawedzie) {
+                                        if (Math.abs(K1.x1 - K.x1) < err) {
+                                                K.x1 = K.x1;
+                                        } else {
+                                                K.x2 = K.x1;
+                                        }
+                                }
+                        }
+                }
+        }
+}
+
+
+
 
 public void losuj_wartosci_i_zasoby_na_polach() {
         ArrayList<Integer> wartosci = new ArrayList<Integer>();
@@ -345,6 +375,7 @@ public Mapa(){
         stworz_krawedzie_ustaw_wskazniki_na_sasiadow();
         losuj_wartosci_i_zasoby_na_polach();
         ustaw_zlodzieja_na_7();
+        wyprostuj_krawedzie();
 }
 }
 
