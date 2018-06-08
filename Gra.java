@@ -170,8 +170,8 @@ public Gra(String[] imiona, Color[] kolory){
         }
         czas_pobierania_wspolrzednych = true;
         Okno = new Okno();
-        samemu();
-//         defaultowo();
+        // samemu();
+        defaultowo();
         // lista_graczy.get(0).punkty = 10;
         pierwsza_runda_rozdaj_surowce();
         // wylosuj_przez_i_kolejek_surowce(200);

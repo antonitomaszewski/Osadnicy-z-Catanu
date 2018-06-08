@@ -14,7 +14,7 @@ public Color kolor_gracza = Color.WHITE;
 
 public int budynek = -1;
 
-int err = (int) Okno.size_hight / 36;
+int err = (int) Okno.size_width / 36;
 
 public Wierzcholek(int x, int y) {
         this.x = x;

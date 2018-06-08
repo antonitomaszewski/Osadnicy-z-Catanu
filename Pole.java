@@ -12,7 +12,7 @@ public int wartosc = -1;
 public String surowiec = "";
 public Color kolor = Color.WHITE;
 
-int err = (int) Okno.size_hight / 20;
+int err = (int) (Okno.size_width/24 * (Math.cos(Math.PI/6)));
 
 public ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcholek>();
 

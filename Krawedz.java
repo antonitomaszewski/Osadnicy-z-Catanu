@@ -15,7 +15,7 @@ public boolean is_empty = true;
 public int nr_gracza = -1;
 public String nazwa_gracza = "";
 public Color kolor_gracza = Color.WHITE;
-int err = (int) Okno.size_hight / 36;
+int err = (int) Okno.size_width / 50;
 
 public Wierzcholek wierzcholek_tworzacy_1;
 public Wierzcholek wierzcholek_tworzacy_2;

@@ -9,7 +9,7 @@ public static ArrayList<Wierzcholek> lista_wierzcholkow = new ArrayList<Wierzcho
 /* PRZENIOSŁEM WARTOŚCI POCZĄTKOWE Z MAPY, DZIĘKI TEMU MOŻESZ JE ZMIENIAĆ W KLASIE I NIE PATRZEĆ NAWET DO ŚRODKA FUNKCJI */
 public int X = (int)Okno.size_width/3;
 public int Y = (int)Okno.size_hight/2;
-public int length = (int)X/6;
+public int length = (int)Okno.size_width/18;
 public int err = (int) length/15;
 
 
