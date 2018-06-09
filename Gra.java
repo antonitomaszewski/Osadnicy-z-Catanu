@@ -79,7 +79,7 @@ public void defaultowo() {
                 dostepne_drogi = Mapa.dostepne_lokalizacje_pierwszej_lub_drugiej_drogi(G);
                 G.zbuduj_pierwsza_lub_druga_droge(dostepne_drogi.get(0));
         }
-        int i = 3;
+        int i = liczba_graczy - 1;
         while (i >= 0) {
                 Gracz G = lista_graczy.get(i);
                 dostepne_osady = Mapa.dostepne_lokalizacje_pierwszej_lub_drugiej_osady();
@@ -170,8 +170,8 @@ public Gra(String[] imiona, Color[] kolory){
         }
         czas_pobierania_wspolrzednych = true;
         Okno = new Okno();
-        // samemu();
-        defaultowo();
+        samemu();
+        // defaultowo();
         // lista_graczy.get(0).punkty = 10;
         pierwsza_runda_rozdaj_surowce();
         // wylosuj_przez_i_kolejek_surowce(200);
@@ -205,7 +205,7 @@ public void nowa_runda(){
                 nowa_runda();
         }
 }
-public static void ustaw_poczatkowe_listy_dostepnych_drog_osad_i_miast(){
+public static void policz_dostepne_drogi(){
         Gracz G = lista_graczy.get(kolejka);
 
         if (G.czy_mozna_postawic_droge()) {
@@ -213,11 +213,19 @@ public static void ustaw_poczatkowe_listy_dostepnych_drog_osad_i_miast(){
         } else {
                 dostepne_drogi = new ArrayList<Krawedz>();
         }
+}
+public static void policz_dostepne_osady(){
+        Gracz G = lista_graczy.get(kolejka);
+
         if (G.czy_mozna_postawic_osade()) {
                 dostepne_osady = G.znajdz_wszyskie_dostepne_lokalizacje_osad();
         } else {
                 dostepne_osady = new ArrayList<Wierzcholek>();
         }
+}
+public static void policz_dostepne_miasta(){
+        Gracz G = lista_graczy.get(kolejka);
+
         if (G.czy_mozna_postawic_miasto()) {
                 dostepne_miasta = G.znajdz_wszyskie_dostepne_lokalizacje_miast();
         } else {
@@ -228,10 +236,6 @@ public void better_gracz_dzialania(){
         Gracz G = lista_graczy.get(kolejka);
         Okno.repaint();
 
-        /* TODO ACTION LISTENER NA LOSOWANIE */
-//        wylosuj_i_rozdaj_surowce();
-        // Okno.label_mapa.s += " losuj";
-        // Okno.repaint();
         while (!wylosowano) {
                 try {
                         Gra.sleep(500);
@@ -259,7 +263,7 @@ public void better_gracz_dzialania(){
                         } catch (InterruptedException ex) {
                                 Gra.currentThread().interrupt();
                         }
-//                wybrano_wspolrzedne = false;
+
                         if (wybrano_wspolrzedne) {
                                 czy_znalazl = przestaw_zlodzieja_na_pole_ktore_wybral_gracz(x, y);
                         }
@@ -271,11 +275,11 @@ public void better_gracz_dzialania(){
         }
         Okno.repaint();
 
-        ustaw_poczatkowe_listy_dostepnych_drog_osad_i_miast();
+
         x = y = -1;
         czas_akcji_gracza = true;
         while(!koniec_kolejki) {
-                ustaw_poczatkowe_listy_dostepnych_drog_osad_i_miast();
+
                 try
                 {
                         Gra.sleep(500);
@@ -299,20 +303,8 @@ public void better_gracz_dzialania(){
                                         Gra.currentThread().interrupt();
                                 }
                         }
+                        zbuduj_droge_ktora_wybral_gracz(x, y);
 
-                        wybrano_wspolrzedne = false;
-                        if (zbuduj_droge_ktora_wybral_gracz(G, x, y)) {
-                                if (G.czy_mozna_postawic_droge()) {
-                                        dostepne_drogi = G.znajdz_wszyskie_dostepne_lokalizacje_drog();
-                                } else {
-                                        dostepne_drogi = new ArrayList<Krawedz>();
-                                }
-                                if (G.czy_mozna_postawic_osade()) {
-                                        dostepne_osady = G.znajdz_wszyskie_dostepne_lokalizacje_osad();
-                                } else {
-                                        dostepne_osady = new ArrayList<Wierzcholek>();
-                                }
-                        }
                 } else if (budujemy_osade) {
                         /* TODO ZŁAP WSPÓŁRZĘDZNE KTÓRE WYBRAŁ GRACZ */
                         czas_pobierania_wspolrzednych = true;
@@ -328,24 +320,8 @@ public void better_gracz_dzialania(){
                                 }
                         }
 
-                        wybrano_wspolrzedne = false;
-                        if (zbuduj_osade_ktora_wybral_gracz(G, x, y)) {
-                                if (G.czy_mozna_postawic_droge()) {
-                                        dostepne_drogi = G.znajdz_wszyskie_dostepne_lokalizacje_drog();
-                                } else {
-                                        dostepne_drogi = new ArrayList<Krawedz>();
-                                }
-                                if (G.czy_mozna_postawic_osade()) {
-                                        dostepne_osady = G.znajdz_wszyskie_dostepne_lokalizacje_osad();
-                                } else {
-                                        dostepne_osady = new ArrayList<Wierzcholek>();
-                                }
-                                if (G.czy_mozna_postawic_miasto()) {
-                                        dostepne_miasta = G.znajdz_wszyskie_dostepne_lokalizacje_miast();
-                                } else {
-                                        dostepne_miasta = new ArrayList<Wierzcholek>();
-                                }
-                        }
+                        zbuduj_osade_ktora_wybral_gracz(x, y);
+
                 } else if (budujemy_miasto) {
                         /* TODO ZŁAP WSPÓŁRZĘDZNE KTÓRE WYBRAŁ GRACZ */
                         czas_pobierania_wspolrzednych = true;
@@ -360,28 +336,10 @@ public void better_gracz_dzialania(){
                                         Gra.currentThread().interrupt();
                                 }
                         }
+                        zbuduj_miasto_ktore_wybral_gracz(x, y);
 
-                        wybrano_wspolrzedne = false;
-//                wybrano_wspolrzedne = false;
-                        if (zbuduj_miasto_ktore_wybral_gracz(G, x, y)) {
-                                if (G.czy_mozna_postawic_osade()) {
-                                        dostepne_osady = G.znajdz_wszyskie_dostepne_lokalizacje_osad();
-                                } else {
-                                        dostepne_osady = new ArrayList<Wierzcholek>();
-                                }
-                                if (G.czy_mozna_postawic_miasto()) {
-                                        dostepne_miasta = G.znajdz_wszyskie_dostepne_lokalizacje_miast();
-                                } else {
-                                        dostepne_miasta = new ArrayList<Wierzcholek>();
-                                }
-                        }
-                }
-                else if (wymiana) {
-                        // new Wymiana();
-
-                        // Wymiana.setAlwaysOnTop (true);
+                } else if (wymiana) {
                         Wymiana.setVisible (true);
-                        // Okno.setAlwaysOnTop (false);
                         while(!potwierdzono_transakcje_i_zamknieto && Wymiana.isVisible()) {
                                 try
                                 {
@@ -393,12 +351,8 @@ public void better_gracz_dzialania(){
                                         Gra.currentThread().interrupt();
                                 }
                         }
-                        // Wymiana.setAlwaysOnTop (false);
-                        // Okno.setAlwaysOnTop (true);
-                        potwierdzono_transakcje_i_zamknieto = false;
-                        ustaw_poczatkowe_listy_dostepnych_drog_osad_i_miast();
-                }
-                else if (wymiana_z_graczem) {
+
+                } else if (wymiana_z_graczem) {
                         Wymiana_z_Graczem.setVisible (true);
                         while(!potwierdzono_transakcje_i_zamknieto && Wymiana.isVisible()) {
                                 try
@@ -411,10 +365,7 @@ public void better_gracz_dzialania(){
                                         Gra.currentThread().interrupt();
                                 }
                         }
-                        potwierdzono_transakcje_i_zamknieto = false;
-                        ustaw_poczatkowe_listy_dostepnych_drog_osad_i_miast();
                 }
-                // Wymiana.setAlwaysOnTop (false);
                 wymiana = budujemy_droge = budujemy_osade = budujemy_miasto = wybrano_wspolrzedne = false;
                 potwierdzono_transakcje_i_zamknieto = false;
                 wymiana_z_graczem = false;
@@ -459,35 +410,29 @@ public boolean przestaw_zlodzieja_na_pole_ktore_wybral_gracz(int x, int y){
         }
         return znalazl;
 }
-public boolean zbuduj_droge_ktora_wybral_gracz(Gracz G, int x, int y){
-        for (Wierzcholek W : G.drogi_osady_i_miasta) {
-                for (Krawedz K : W.sasiednie_krawedzie) {
-                        if (K.czy_to_tu(x, y)) {
-                                G.zbuduj_droge(K);
-                                return true;
-                        }
-
+public void zbuduj_droge_ktora_wybral_gracz(int x, int y){
+        for (Krawedz K : dostepne_drogi) {
+                if (K.czy_to_tu(x, y)) {
+                        lista_graczy.get(kolejka).zbuduj_droge(K);
+                        return;
                 }
         }
-        return false;
 }
-public boolean zbuduj_osade_ktora_wybral_gracz(Gracz G, int x, int y){
-        for (Wierzcholek W : G.drogi_osady_i_miasta) {
+public void zbuduj_osade_ktora_wybral_gracz(int x, int y){
+        for (Wierzcholek W : dostepne_osady) {
                 if (W.czy_to_tu(x, y)) {
-                        G.zbuduj_osade(W);
-                        return true;
+                        lista_graczy.get(kolejka).zbuduj_osade(W);
+                        return;
                 }
         }
-        return false;
 }
-public boolean zbuduj_miasto_ktore_wybral_gracz(Gracz G, int x, int y){
-        for (Wierzcholek W : G.drogi_osady_i_miasta) {
+public void zbuduj_miasto_ktore_wybral_gracz(int x, int y){
+        for (Wierzcholek W : dostepne_miasta) {
                 if (W.czy_to_tu(x, y)) {
-                        G.zbuduj_miasto(W);
-                        return true;
+                        lista_graczy.get(kolejka).zbuduj_miasto(W);
+                        return;
                 }
         }
-        return false;
 }
 /* FUNKCJIE DZIAŁAŃ GRACZA  -- Koniec */
 

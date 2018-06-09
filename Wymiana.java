@@ -78,7 +78,6 @@ public ActionListener action_potwierdz_transakcje = new ActionListener() {
 
                         if (licznik == 1 && licznik_sprzedaj == 1) {
                                 Gra.lista_graczy.get(Gra.kolejka).czy_mozna_wymienic_wymien(kup, sprzedaj);
-                                Gra.ustaw_poczatkowe_listy_dostepnych_drog_osad_i_miast();
                                 System.out.println("Udało się wymienić");
                         }
                         else

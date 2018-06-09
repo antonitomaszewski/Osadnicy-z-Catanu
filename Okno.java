@@ -68,6 +68,7 @@ public ActionListener action_droga = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
                 if (Gra.czas_akcji_gracza) {
                         // Gra.budujemy_droge = !Gra.budujemy_droge;
+                        Gra.policz_dostepne_drogi();
                         Gra.budujemy_droge = true;
                         Gra.budujemy_osade = false;
                         Gra.budujemy_miasto = false;
@@ -80,6 +81,7 @@ public ActionListener action_osada = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
                 if (Gra.czas_akcji_gracza) {
+                        Gra.policz_dostepne_osady();
                         Gra.budujemy_droge = false;
                         // Gra.budujemy_osade = !Gra.budujemy_osade;
                         Gra.budujemy_osade = true;
@@ -93,6 +95,7 @@ public ActionListener action_miasto = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
                 if (Gra.czas_akcji_gracza) {
+                        Gra.policz_dostepne_miasta();
                         Gra.budujemy_droge = false;
                         Gra.budujemy_osade = false;
                         // Gra.budujemy_miasto = !Gra.budujemy_miasto;

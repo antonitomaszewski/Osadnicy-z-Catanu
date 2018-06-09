@@ -120,50 +120,41 @@ public void zabierz(int ile, String surowiec){
 
 
 public void zbuduj_droge(Krawedz K){
-        if (czy_mozna_postawic_droge()) {
-                K.zbuduj_droge(numer, imie, kolor);
-                if (!czy_wierzcholek_juz_jest(K.wierzcholek_tworzacy_1)) {
-                        drogi_osady_i_miasta.add(K.wierzcholek_tworzacy_1);
-                } else if (!czy_wierzcholek_juz_jest(K.wierzcholek_tworzacy_2)) {
-                        drogi_osady_i_miasta.add(K.wierzcholek_tworzacy_2);
-                }
-                this.zabierz(1, "drewno");
-                this.zabierz(1, "cegla");
-                postawione_drogi++;
-                pozostale_drogi--;
+
+        K.zbuduj_droge(numer, imie, kolor);
+        if (!czy_wierzcholek_juz_jest(K.wierzcholek_tworzacy_1)) {
+                drogi_osady_i_miasta.add(K.wierzcholek_tworzacy_1);
+        } else if (!czy_wierzcholek_juz_jest(K.wierzcholek_tworzacy_2)) {
+                drogi_osady_i_miasta.add(K.wierzcholek_tworzacy_2);
         }
-        return;
+        this.zabierz(1, "drewno");
+        this.zabierz(1, "cegla");
+        postawione_drogi++;
+        pozostale_drogi--;
 }
 public void zbuduj_osade(Wierzcholek W){
-        if (czy_mozna_postawic_osade()) {
+        W.zbuduj_osade(this.numer, this.imie, this.kolor);
 
-                W.zbuduj_osade(this.numer, this.imie, this.kolor);
-
-                this.zabierz(1, "owca");
-                this.zabierz(1, "siano");
-                this.zabierz(1, "drewno");
-                this.zabierz(1, "cegla");
-                punkty++;
-                postawione_osady++;
-                pozostale_osady--;
-        }
-        return;
+        this.zabierz(1, "owca");
+        this.zabierz(1, "siano");
+        this.zabierz(1, "drewno");
+        this.zabierz(1, "cegla");
+        punkty++;
+        postawione_osady++;
+        pozostale_osady--;
 }
 public void zbuduj_miasto(Wierzcholek W){
-        if (czy_mozna_postawic_miasto()) {
-                W.zbuduj_miasto();
+        W.zbuduj_miasto();
 
-                this.zabierz(2, "siano");
-                this.zabierz(3, "kamien");
+        this.zabierz(2, "siano");
+        this.zabierz(3, "kamien");
 
-                punkty++;
-                postawione_miasta++;
-                pozostale_miasta--;
+        punkty++;
+        postawione_miasta++;
+        pozostale_miasta--;
 
-                postawione_osady--;
-                pozostale_osady++;
-        }
-        return;
+        postawione_osady--;
+        pozostale_osady++;
 }
 
 public boolean czy_mozna_wymienic(int ile, String surowiec) {
